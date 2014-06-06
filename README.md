@@ -3,17 +3,17 @@ solid
 
 Magic bananas!
 
-#Dependencies
+##Dependencies
 Hehehe... I forgot the package.json "by accident".
 If you need to find out the dependencies, have fun looking at the code!
 
-#License
+##License
 MIT. I know you know what that means.
 
-#How to Use
+##How to Use
 You don't.
 
-#Credits
+##Credits
 This work has nothing to do with Santa Claus.
 He doesn't own any of the copyrights.
 
