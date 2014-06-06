@@ -1,0 +1,46 @@
+<head>
+
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="/js/countdown.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+
+<body>
+
+	<div class="outer">
+		<div class="middle">
+			<div class="inner">
+
+
+				<table id="belltimes">
+					<% for(var i=0; i<bells.length; i++) {%>
+
+
+					<% if (bells[i].bell in classVariations) { %> <tr class="warning" title="<%= classVariations[bells[i].bell].title %> has <%= classVariations[bells[i].bell].casualSurname %> as a casual."> <% } else { %> <tr>  <% } %>
+						<% if(timetable.timetable.periods[bells[i].bell] && timetable.timetable.periods[bells[i].bell].room) {%>
+						<td><%= bells[i].time %></td>
+						<td class="mainCell"><%= timetable.subjects[timetable.timetable.periods[bells[i].bell].year + timetable.timetable.periods[bells[i].bell].title].title %></td>
+						<td><%= timetable.timetable.periods[bells[i].bell].room %></td>
+					<% } else  { %>
+						<td><%= bells[i].time %></td>
+						<td class="mainCell"><%= bells[i].bellDisplay %></td>
+						<td></td>
+						<% } %>
+					</tr>
+					<% } %>
+				</table>
+
+				<div>
+					<p id="next">Ya' Mum!</p>
+					<p id="subtext">starts in</p>
+					<p id="time">Nobody knows!</p>
+				</div>
+
+
+
+
+			</div>
+		</div>
+	</div>
+</body>
