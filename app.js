@@ -1,10 +1,10 @@
-var id = 'jellyfish',
-secret = 'VBDLTj1PEDTJybfXXYrt48AUQi4',
-host   = 'localhost';
 
-// Don't change stuff below this too often. ;)
+var config = require('./config'),
+    id     = config.id,
+    secret = config.secret,
+    host   = config.host;
 
-var express      = require('express'),
+var express  = require('express'),
 app          = express(),
 ejs          = require('ejs'),
 passport     = require('passport'),
@@ -44,10 +44,7 @@ app.get('/', function(req,res) {
             if (!err && o) {
                 res.render('index', o);
             } else {
-                passport.authenticate('sbhs', {
-    successRedirect: '/',
-    failureRedirect: '/'
-});
+                res.redirect('/login');
             }
         });
     } else {
