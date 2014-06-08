@@ -11,9 +11,6 @@ body {
 	font-weight: 100;
 	letter-spacing: 1px;
 	cursor: default;
-	user-select: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
 }
 
 p {
@@ -23,8 +20,12 @@ p {
 	}
 
 
-.mainCell {
-	width: 50%;
+.timeCell {
+	width: 25%;
+}
+
+.roomCell {
+	width: 20%;
 }
 
 .outer {
@@ -36,11 +37,6 @@ p {
 .middle {
 	display: table-cell;
 	vertical-align: middle;
-}
-.inner {
-	margin-left: auto;
-	margin-right: auto; 
-	width: 100%;
 }
 
 .warning{
@@ -79,7 +75,7 @@ p {
 		font-size: 8vw;
 	}
 
-	#subtext {
+	.subtext {
 		font-size: 2vw;
 		margin-top: 1vh;
 		margin-bottom: 1vh;
@@ -97,6 +93,10 @@ p {
 
 @media screen and (orientation:portrait) {
 
+	#date {
+		display: none;
+	}
+
 	#belltimes {
 		width: 80%;
 		font-size: 3vh;
@@ -107,7 +107,7 @@ p {
 		font-size: 8vh;
 	}
 
-	#subtext {
+	.subtext {
 		font-size: 2vh;
 		margin-top: 1vh;
 		margin-bottom: 1vh;
