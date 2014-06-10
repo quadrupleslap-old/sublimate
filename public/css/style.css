@@ -52,6 +52,11 @@ p {
 	border-collapse:collapse;
 }
 
+#belltimes table {
+	width: 100%;
+	min-height: 100%;
+}
+
 #belltimes td
 {
 	white-space: nowrap;
@@ -64,18 +69,22 @@ p {
 @media screen and (orientation:landscape) {
 
 	#belltimes {
+		position: absolute;
 		float: left;
 		width:33%;
-		margin-left: 5%;
-		font-size: 2vw;
+		left: 5%;
+		top: 5%;
+		height: 90%;
+		overflow: scroll;
 	}
 
 	#right-side {
-		margin: auto;
-		margin-right: 5%;
+		position: absolute;
+		right: 5%;
+		top: 5%;
 		width: 52%;
-		float: right;
 		height: 90%;
+		float: right;
 	}
 
 	#time {
@@ -93,7 +102,7 @@ p {
 	}
 
 	#belltimes td {
-		padding: 1vw;
+		font-size: 2vw;
 	}
 
 }
@@ -103,11 +112,9 @@ p {
 
 	#belltimes {
 		width: 80%;
-		font-size: 3vh;
 	}
 
 	#time {
-		margin-top: 4vh;
 		font-size: 6vh;
 	}
 
@@ -118,10 +125,12 @@ p {
 	}
 
 	#next {
+		margin-top: 4vh;
 		font-size: 4vh;
 	}	
 
 	#belltimes td {
 		padding: 1vh;
+		font-size: 3vh;
 	}
 }
