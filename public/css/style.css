@@ -30,7 +30,6 @@ p {
 
 .outer {
 	display: table;
-	position: absolute;
 	height: 100%;
 	width: 100%;
 }
@@ -71,8 +70,16 @@ p {
 		font-size: 2vw;
 	}
 
-	#next {
-		font-size: 8vw;
+	#right-side {
+		margin: auto;
+		margin-right: 5%;
+		width: 52%;
+		float: right;
+		height: 90%;
+	}
+
+	#time {
+		font-size: 6vw;
 	}
 
 	.subtext {
@@ -81,7 +88,7 @@ p {
 		margin-bottom: 1vh;
 	}
 
-	#time {
+	#next {
 		font-size: 4vw;
 	}
 
@@ -93,18 +100,15 @@ p {
 
 @media screen and (orientation:portrait) {
 
-	#date {
-		display: none;
-	}
 
 	#belltimes {
 		width: 80%;
 		font-size: 3vh;
 	}
 
-	#next {
+	#time {
 		margin-top: 4vh;
-		font-size: 8vh;
+		font-size: 6vh;
 	}
 
 	.subtext {
@@ -113,7 +117,7 @@ p {
 		margin-bottom: 1vh;
 	}
 
-	#time {
+	#next {
 		font-size: 4vh;
 	}	
 

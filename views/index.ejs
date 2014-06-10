@@ -4,11 +4,80 @@
 	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="/js/countdown.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="icon" sizes="196x196" href="/img/icon.png">
 
 	<script>
-		$(function() {
-			$("#date").text((new Date).toLocaleDateString());
-		});
+
+	$(function() {
+		window.date      = <%- JSON.stringify(date     ) %>;
+		window.bells     = <%- JSON.stringify(bells    ) %>;
+		window.timetable = <%- JSON.stringify(timetable) %>;
+
+		showNextPeriod();
+
+	});
+
+	function showNextPeriod() {
+		var now  = new Date();
+		var bell = new Date(date);
+		var splitted;
+
+		for(var i=0; i<bells.length; i++) {
+
+			splitted = bells[i].time.split(":");
+
+			bell.setHours(splitted[0]);
+			bell.setMinutes(splitted[1]);
+
+			if (bell > now) {
+				var nextPeriod = timetable.timetable.periods[bells[i].bell];
+				$("#next").text(timetable.subjects[nextPeriod.year + nextPeriod.title] || bells[i].bellDisplay);
+
+				window.updateLoop = setInterval(function () {
+
+					var units = countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS,
+					    ts    = countdown(bell, null, units),
+					    msg   = "",
+					    value,
+					    humanisedValues = [];
+
+					value = ts.days;
+					if (value) {
+						humanisedValues.push(twoPad(value)+"d");
+					}
+
+					value = ts.hours;
+					if (value) {
+						humanisedValues.push(twoPad(value)+"h");
+					}
+
+					humanisedValues.push(twoPad(ts.minutes)+"m");
+
+					humanisedValues.push(twoPad(ts.seconds)+"s");
+
+					msg = humanisedValues.join(", ");
+
+					$("#time").text(msg);
+
+					if (now > bell) {
+						clearInterval(updateLoop);
+						showNextPeriod();
+					}
+				}, 1000);
+
+				return;
+			}
+
+			location.reload();
+
+		}
+	}
+
+	function twoPad(n) {
+		return (n < 10) ? '0' + n : '' + n;
+	}
+
 	</script>
 </head>
 
@@ -19,33 +88,37 @@
 		<div class="middle">
 
 
-				<table id="belltimes">
-					<% for(var i=0; i<bells.length; i++) {%>
+			<table id="belltimes">
+				<% for(var i=0; i<bells.length; i++) {%>
 
-
-					<% if (bells[i].bell in classVariations) { %> <tr class="warning" title="<%= classVariations[bells[i].bell].title %> has <%= classVariations[bells[i].bell].casualSurname %> as a casual."> <% } else { %> <tr>  <% } %>
-						<% if(timetable.timetable.periods[bells[i].bell] && timetable.timetable.periods[bells[i].bell].room) {%>
-						<td class="timeCell"><%= bells[i].time %></td>
-						<td><%= timetable.subjects[timetable.timetable.periods[bells[i].bell].year + timetable.timetable.periods[bells[i].bell].title].title %></td>
-						<td class="roomCell"><%= timetable.timetable.periods[bells[i].bell].room %></td>
-					<% } else  { %>
-						<td class="timeCell"><%= bells[i].time %></td>
-						<td><%= bells[i].bellDisplay %></td>
-						<td class="roomCell"></td>
-						<% } %>
-					</tr>
+					<% if (bells[i].bell in classVariations && classVariations[bells[i].bell].type == "replacement") { %>
+						<tr class="warning" title="<%= classVariations[bells[i].bell].title %> has <%= classVariations[bells[i].bell].casualSurname %> as a casual.">
+					<% } else { %>
+						<tr> 
 					<% } %>
-				</table>
 
-				<div>
-					<p id="date" class="subtext"></p>
-					<p id="next">Ya' Mum!</p>
-					<p class="subtext">in</p>
-					<p id="time">Nobody knows!</p>
-				</div>
+						<% if(timetable.timetable.periods[bells[i].bell] && timetable.timetable.periods[bells[i].bell].room) {%>
+							<td class="timeCell"><%= bells[i].time %></td>
+							<td><%= timetable.subjects[timetable.timetable.periods[bells[i].bell].year + timetable.timetable.periods[bells[i].bell].title].title %></td>
+							<td class="roomCell"><%= timetable.timetable.periods[bells[i].bell].room %></td>
+						<% } else  { %>
+							<td class="timeCell"><%= bells[i].time %></td>
+							<td><%= bells[i].bellDisplay %></td>
+							<td class="roomCell"></td>
+						<% } %>
+				
+					</tr>
+				<% } %>
+			</table>
 
-
-
+		<div id="right-side">
+			<p id="next">Wait for it...</p>
+			<p class="subtext">in</p>
+			<p id="time">Loading...</p>
 		</div>
+
+
+
 	</div>
+</div>
 </body>
