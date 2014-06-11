@@ -1,17 +1,22 @@
 <head>
 	<title>Solid</title>
 	
-	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="/js/countdown.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="icon" sizes="196x196" href="/img/icon.png">
 	<link rel="apple-touch-icon" sizes="196x196" href="/img/icon.png">
+	<link rel="icon" 
+      type="image/png" 
+      href="/img/favicon.png">
 
 	<script>
 
 	$(function() {
+		$("#in").text("in");
+		$("#time").text("Loading");
 
 		window.date      = <%- JSON.stringify(date     ) %>;
 		window.bells     = <%- JSON.stringify(bells    ) %>;
@@ -35,7 +40,7 @@
 
 			if (bell > now) {
 				var nextPeriod = timetable.timetable.periods[bells[i].bell];
-				$("#next").text(timetable.subjects[nextPeriod.year + nextPeriod.title] || bells[i].bellDisplay);
+				$("#next").text(nextPeriod ? timetable.subjects[nextPeriod.year + nextPeriod.title] : bells[i].bellDisplay);
 
 				window.updateLoop = setInterval(function () {
 
@@ -46,19 +51,13 @@
 					    humanisedValues = [];
 
 					value = ts.days;
-					if (value) {
-						humanisedValues.push(twoPad(value)+"d");
-					}
+					if (value) {humanisedValues.push(twoPad(value)+"d");}
 
 					value = ts.hours;
-					if (value) {
-						humanisedValues.push(twoPad(value)+"h");
-					}
+					if (value) {humanisedValues.push(twoPad(value)+"h");}
 
 					humanisedValues.push(twoPad(ts.minutes)+"m");
-
 					humanisedValues.push(twoPad(ts.seconds)+"s");
-
 					msg = humanisedValues.join(", ");
 
 					$("#time").text(msg);
@@ -95,7 +94,7 @@
 				<% for(var i=0; i<bells.length; i++) {%>
 
 					<% if (bells[i].bell in classVariations && classVariations[bells[i].bell].type == "replacement") { %>
-						<tr class="warning" title="<%= classVariations[bells[i].bell].title %> has <%= classVariations[bells[i].bell].casualSurname %> as a casual.">
+						<tr class="blue" title="<%= classVariations[bells[i].bell].title %> has <%= classVariations[bells[i].bell].casualSurname %> as a casual.">
 					<% } else { %>
 						<tr> 
 					<% } %>
@@ -116,9 +115,9 @@
 		</div>
 
 		<div id="right-side">
-			<p id="next">Wait for it...</p>
-			<p class="subtext">in</p>
-			<p id="time">Loading</p>
+			<p id="next"></p>
+			<p class="subtext" id="in"></p>
+			<p id="time">Solid</p>
 
 
 		</div>
