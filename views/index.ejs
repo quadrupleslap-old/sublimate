@@ -1,5 +1,5 @@
 <head>
-	<title>Solid</title>
+	<title>Sublimate</title>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="/js/countdown.min.js"></script>
@@ -7,10 +7,10 @@
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="icon" sizes="196x196" href="/img/icon.png">
-	<link rel="apple-touch-icon" sizes="196x196" href="/img/icon.png">
+	<link rel="apple-touch-icon-precomposed" sizes="196x196" href="/img/icon.png">
 	<link rel="icon" 
-      type="image/png" 
-      href="/img/favicon.png">
+      type="image/x-icon" 
+      href="/img/favicon.ico">
 
 	<script>
 
@@ -24,6 +24,10 @@
 
 		showNextPeriod();
 
+	});
+
+	$(window).resize(function() {
+		$("td, p").css("z-index", 1);
 	});
 
 	function showNextPeriod() {

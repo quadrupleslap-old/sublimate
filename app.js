@@ -77,6 +77,7 @@ app.get('/', function(req,res) {
 
          req.user.tokens = tokens;
          SBHS.day(req.user.tokens.accessToken, function (err, o) {
+          console.log(require('util').inspect(o.timetable));
             if (!err && o) {
                 res.render('index', o);
             } else {
