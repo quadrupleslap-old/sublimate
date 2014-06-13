@@ -73,20 +73,43 @@ function getTokens(tokens, done) {
 
 app.get('/', function(req,res) {
     if (req.user) {
-        getTokens(req.user.tokens, function(err, tokens) {
+        res.render('index');
+    } else {
+        res.render('login');
+    }
+});
 
+app.get('/api/dailynotices.json', function(req,res) {
+    if (req.user) {
+        getTokens(req.user.tokens, function(err, tokens) {
          req.user.tokens = tokens;
-         SBHS.day(req.user.tokens.accessToken, function (err, o) {
-          console.log(require('util').inspect(o.timetable));
+         SBHS.dailyNotices(req.user.tokens.accessToken, function (err, o) {
             if (!err && o) {
-                res.render('index', o);
+                res.json(o);
             } else {
-                res.redirect('/login');
+                res.status().send('500 ' + err);
             }
         });
      });
     } else {
-        res.render('login');
+        res.status(403).send('403 Access Denied');
+    }
+});
+
+app.get('/api/daytimetable.json', function(req,res) {
+    if (req.user) {
+        getTokens(req.user.tokens, function(err, tokens) {
+         req.user.tokens = tokens;
+         SBHS.day(req.user.tokens.accessToken, function (err, o) {
+            if (!err && o) {
+                res.json(o);
+            } else {
+                res.status().send('500 ' + err);
+            }
+        });
+     });
+    } else {
+        res.status(403).send('403 Access Denied');
     }
 });
 

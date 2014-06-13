@@ -1,137 +1,55 @@
 <head>
 	<title>Sublimate</title>
-	
+
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
+
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="/js/countdown.min.js"></script>
+	<script src="/js/countdown.js"></script>
+	
+	<script src="/js/authenticated.js"></script>
+	<script src="/js/util.js"></script>
+
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
+
 	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="icon" sizes="196x196" href="/img/icon.png">
-	<link rel="apple-touch-icon-precomposed" sizes="196x196" href="/img/icon.png">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon-precomposed" sizes="
+	196x196" href="/img/icon.png">
+
+	<meta name="application-name" content="Sublimate"/>
+	<meta name="msapplication-config" content="ieconfig.xml" />
+
 	<link rel="icon" 
-      type="image/x-icon" 
-      href="/img/favicon.ico">
+	type="image/x-icon" 
+	href="/img/favicon.ico">
 
-	<script>
-
-	$(function() {
-		$("#in").text("in");
-		$("#time").text("Loading");
-
-		window.date      = <%- JSON.stringify(date     ) %>;
-		window.bells     = <%- JSON.stringify(bells    ) %>;
-		window.timetable = <%- JSON.stringify(timetable) %>;
-
-		showNextPeriod();
-
-	});
-
-	$(window).resize(function() {
-		$("td, p").css("z-index", 1);
-	});
-
-	function showNextPeriod() {
-		var now  = new Date();
-		var bell = new Date(date);
-		var splitted;
-
-		for(var i=0; i<bells.length; i++) {
-
-			splitted = bells[i].time.split(":");
-
-			bell.setHours(splitted[0]);
-			bell.setMinutes(splitted[1]);
-
-			if (bell > now) {
-				if (bells[i].bellDisplay)
-
-				var nextPeriod = timetable.timetable.periods[bells[i].bell];
-				$("#next").text(nextPeriod && nextPeriod.year ? timetable.subjects[nextPeriod.year + nextPeriod.title].subject : bells[i].bellDisplay);
-
-				if (nextPeriod && nextPeriod.room) {$("#next").text($("#next").text() + " (" + nextPeriod.room +")");}
-
-				window.updateLoop = setInterval(function () {
-
-					var units = countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS,
-					    now   = new Date(),
-					    ts    = countdown(bell, now, units),
-					    msg   = "",
-					    value,
-					    humanisedValues = [];
-
-					value = ts.days;
-					if (value) {humanisedValues.push(twoPad(value)+"d");}
-
-					value = ts.hours;
-					if (value) {humanisedValues.push(twoPad(value)+"h");}
-
-					humanisedValues.push(twoPad(ts.minutes)+"m");
-					humanisedValues.push(twoPad(ts.seconds)+"s");
-					msg = humanisedValues.join(", ");
-
-
-					if (now > bell) {
-						clearInterval(updateLoop);
-						showNextPeriod();
-					} else {
-						$("#time").text(msg);
-					}
-				}, 1000);
-
-				return;
-			}
-
-		}
-
-		location.reload();
-
-	}
-
-	function twoPad(n) {
-		return (n < 10) ? '0' + n : '' + n;
-	}
-
-	</script>
 </head>
 
 
 <body>
 
+	<div id="belltimes-decoration"></div>
+
 	<div class="outer">
 		<div class="middle">
-<div id="belltimes">
-			<table>
-				<% for(var i=0; i<bells.length; i++) {%>
+			<div id="belltimes">
+				<table></table>
+			</div>
 
-					<% if (bells[i].bell in classVariations && classVariations[bells[i].bell].type == "replacement") { %>
-						<tr class="blue" title="<%= classVariations[bells[i].bell].title %> has <%= classVariations[bells[i].bell].casualSurname %> as a casual.">
-					<% } else { %>
-						<tr> 
-					<% } %>
+			<div id="right-side">
+				<div>
+					<p class="subtext" id="week"></p>
+					<p id="next">Loading</p>
+					<p class="subtext">in</p>
+					<p id="time">00h, 00m, 00s</p>
+				</div>
 
-						<% if(timetable.timetable.periods[bells[i].bell] && timetable.timetable.periods[bells[i].bell].room) {%>
-							<td class="timeCell"><%= bells[i].time %></td>
-							<td><%= timetable.subjects[timetable.timetable.periods[bells[i].bell].year + timetable.timetable.periods[bells[i].bell].title].title %></td>
-							<td class="roomCell"><%= timetable.timetable.periods[bells[i].bell].room %></td>
-						<% } else  { %>
-							<td class="timeCell"><%= bells[i].time %></td>
-							<td><%= bells[i].bellDisplay %></td>
-							<td class="roomCell"></td>
-						<% } %>
-				
-					</tr>
-				<% } %>
-			</table>
-		</div>
-
-		<div id="right-side">
-			<p id="next"></p>
-			<p class="subtext" id="in"></p>
-			<p id="time">Sublimate</p>
-
+				<div id="notices">
+				</div>
+			</div>
 
 		</div>
-
 	</div>
-</div>
 </body>

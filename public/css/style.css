@@ -1,16 +1,20 @@
 
 
 body {
-	background:url("/img/background.png");
 	text-align: center;
 	margin:0;
 	padding:0;
 	height:100%;
-	color: white;
-	font: 12px "Helvetica Neue", Arial, sans-serif;
+	color: black;
+	font: 12px   "Roboto", "Helvetica Neue", Helvetica, sans-serif;
 	font-weight: 100;
 	letter-spacing: 1px;
 	cursor: default;
+     -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 p {
@@ -38,8 +42,11 @@ p {
 	vertical-align: middle;
 }
 
-.blue{
-	color:cyan;
+.rollover {
+	border-bottom: 1px dotted red;
+	color: red;
+	width:auto;
+	display: inline;
 	cursor: help;
 }
 
@@ -60,30 +67,50 @@ p {
 #belltimes td
 {
 	white-space: nowrap;
-	font-weight: 100;
+	font-weight: 300;
+	letter-spacing: 0px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.warning {
+	color: red;
 }
 
 
 @media screen and (orientation:landscape) {
 
+	body {
+		background:url("/img/background.png") white;
+		background-attachment: fixed;
+	}
+
 	#belltimes {
-		position: absolute;
+		position: fixed;
 		float: left;
-		width:33%;
-		left: 5%;
-		top: 5%;
-		height: 90%;
+		width:30%;
+		left: 3%;
+		top: 3%;
+		height: 94%;
 		overflow: scroll;
+	}
+
+	#belltimes-decoration {
+		position: fixed;
+		background-color: rgba(255,255,255,0.25);
+		top: 0;
+		left: 0;
+		width: 36%;
+		height: 100%;
+		/*box-shadow: 0px 0px 32px 32px rgba(0,0,0,0.25);*/
 	}
 
 	#right-side {
 		position: absolute;
-		right: 5%;
+		right: 0;
 		top: 5%;
-		width: 52%;
-		height: 90%;
+		width: 64%;
+		height: auto;
 		float: right;
 	}
 
@@ -93,8 +120,6 @@ p {
 
 	.subtext {
 		font-size: 2vw;
-		margin-top: 1vh;
-		margin-bottom: 1vh;
 	}
 
 	#next {
@@ -103,6 +128,28 @@ p {
 
 	#belltimes td {
 		font-size: 2vw;
+	}
+
+	#notices div {
+		background-color: rgba(255,255,255,0.25);
+		margin: 3%;
+		width: 88%;
+		padding: 2vw;
+		padding-bottom: 3vw;
+		/*box-shadow: 0px 0px 16px 16px rgba(0,0,0,0.1);*/
+		text-align: left;
+		color: black;
+		font-weight: normal;
+		letter-spacing: 0;
+		font-size: 1vw;
+	}
+
+	#notices div .title {
+		font-size: 2vw;
+	}
+
+	#notices div .author {
+		color: grey;
 	}
 
 }
@@ -132,5 +179,13 @@ p {
 	#belltimes td {
 		padding: 1vh;
 		font-size: 3vh;
+	}
+
+	#notices{
+		display: none;
+	}
+
+	#week {
+		display: none;
 	}
 }

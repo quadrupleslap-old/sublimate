@@ -1,0 +1,1 @@
+function escapeHTML(e){return e.replace(/&/g,"&").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}function twoPad(e){return e<10?"0"+e:""+e}
