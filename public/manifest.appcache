@@ -1,0 +1,17 @@
+CACHE MANIFEST
+
+# b
+
+CACHE:
+/img/favicon.ico
+/img/background.png
+/css/style.css
+/api/timetable.json
+
+http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
+
+NETWORK:
+*
+
+FALLBACK:
+/ /fallback

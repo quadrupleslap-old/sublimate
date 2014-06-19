@@ -1,0 +1,36 @@
+{
+  "name": "sublimate",
+  "version": "0.0.1",
+  "description": "sublimate =====",
+  "main": "app.js",
+  "dependencies": {
+    "cookie-parser": "~1.1.0",
+    "ejs": "~1.0.0",
+    "express": "~4.4.0",
+    "express-session": "~1.2.1",
+    "node-uuid": "~1.4.1",
+    "passport": "~0.2.0",
+    "passport-sbhs": "~0.0.3",
+    "request": "~2.36.0",
+    "compression": "~1.0.7"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.10.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/master-baiter/solid.git"
+  },
+  "author": "Ram Kaniyur",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/master-baiter/solid/issues"
+  },
+  "homepage": "https://github.com/master-baiter/solid"
+}

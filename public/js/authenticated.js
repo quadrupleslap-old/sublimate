@@ -3,15 +3,11 @@
 		getNotices();
 	});
 
-	$(window).resize(function() {
-		$("td, p, div").css("z-index", 1);
-	});
-
 	function getDay() {
 		$.getJSON( "/api/daytimetable.json", function( data ) {
 			
 			window.day = data;
-			showNextPeriod();
+			day.bells[0].bellDisplay = "School Starts";
 
 			$("#belltimes table").empty();
 
@@ -69,6 +65,7 @@
 			}
 
 			$("#belltimes table").append(constructed);
+			showNextPeriod();
 
 		});
 
@@ -80,8 +77,6 @@ function showNextPeriod() {
 	var now  = new Date();
 	var bell = new Date(day.date);
 	var splitted;
-
-	day.bells[0].bellDisplay = "School Starts";
 
 	for(var i=0; i<day.bells.length; i++) {
 
@@ -139,6 +134,7 @@ function getNotices() {
 	$.getJSON( "/api/dailynotices.json", function( data ) {
 
 		if (data.notices) {
+			$("#week").empty();
 			$("#week").append($("<b>", {"text": ('Week ' + data.dayInfo.week + data.dayInfo.weekType)}));
 
 			var newNotice;

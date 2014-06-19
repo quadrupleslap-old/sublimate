@@ -1,4 +1,3 @@
-
 var config = require('./config'),
 id     = config.id,
 secret = config.secret,
@@ -16,7 +15,11 @@ request        = require('request');
 passport.serializeUser(function(user,done){done(null,user)});
 passport.deserializeUser(function(user,done){done(null,user)});
 
+app.use(require('compression')());
+
 app.use(express.static(__dirname + '/public'));
+express.static.mime.define({'text/cache-manifest': ['appcache']});
+
 app.set('view engine', 'ejs');
 app.use(require('cookie-parser')());
 app.use(require('express-session')({secret: secret, key: id, cookie:{maxAge:7776000000}}));
@@ -33,6 +36,7 @@ var SBHS = new SBHSStrategy({
 },
 function(accessToken, refreshToken, profile, done) {
     var now = new Date();
+    console.log(profile.givenName + ' ' + profile.surname + ' logged in!');
     profile.tokens = {accessToken: accessToken, refreshToken: refreshToken, expires: (new Date(now.getTime() + 3600000)).valueOf()};
         done(null,profile);
     });
@@ -57,6 +61,7 @@ function getTokens(tokens, done) {
   }, function (err, response, body) {
     if(err) return done(err);
 
+
     var result = JSON.parse(body);
 
     var now = new Date();
@@ -79,6 +84,14 @@ app.get('/', function(req,res) {
     }
 });
 
+app.get('/fallback', function(req,res) {
+    if (req.user) {
+        res.render('offline');
+    } else {
+        res.status(401).send("401 Unauthorized");
+    }
+});
+
 app.get('/api/dailynotices.json', function(req,res) {
     if (req.user) {
         getTokens(req.user.tokens, function(err, tokens) {
@@ -87,12 +100,29 @@ app.get('/api/dailynotices.json', function(req,res) {
             if (!err && o) {
                 res.json(o);
             } else {
-                res.status().send('500 ' + err);
+                res.status(500).send(err);
             }
         });
      });
     } else {
-        res.status(403).send('403 Access Denied');
+        res.status(401).send("401 Unauthorized");
+    }
+});
+
+app.get('/api/timetable.json', function(req,res) {
+    if (req.user) {
+        getTokens(req.user.tokens, function(err, tokens) {
+         req.user.tokens = tokens;
+         SBHS.timetable(req.user.tokens.accessToken, function (err, o) {
+            if (!err && o) {
+                res.json(o);
+            } else {
+                res.status(500).send(err);
+            }
+        });
+     });
+    } else {
+        res.status(401).send("401 Unauthorized");
     }
 });
 
@@ -104,12 +134,12 @@ app.get('/api/daytimetable.json', function(req,res) {
             if (!err && o) {
                 res.json(o);
             } else {
-                res.status().send('500 ' + err);
+                res.status(500).send(err);
             }
         });
      });
     } else {
-        res.status(403).send('403 Access Denied');
+        res.status(401).send("401 Unauthorized");
     }
 });
 
