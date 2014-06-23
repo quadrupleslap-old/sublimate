@@ -4,18 +4,18 @@
 	});
 
 	function getDay() {
-		$.getJSON( "/api/daytimetable.json", function( data ) {
+		$.getJSON( '/api/daytimetable.json', function( data ) {
 			
 			window.day = data;
-			day.bells[0].bellDisplay = "School Starts";
+			day.bells[0].bellDisplay = 'School Starts';
 
-			$("#belltimes table").empty();
+			$('#belltimes table').empty();
 
-			var constructed = "";
+			var constructed = '';
 
 			for(var i=0; i<day.bells.length; i++) {
 
-				constructed += "<tr>"
+				constructed += '<tr>'
 				
 
 				if(day.timetable.timetable.periods[day.bells[i].bell] && day.timetable.timetable.periods[day.bells[i].bell].room) {
@@ -28,8 +28,8 @@
 						+ escapeHTML(day.classVariations[day.bells[i].bell].title
 							+ ' has '
 							+ day.classVariations[day.bells[i].bell].casualSurname.trim())
-							+ ' as a casual.">'
-							+ escapeHTML(day.timetable.subjects[day.timetable.timetable.periods[day.bells[i].bell].year
+						+ ' as a casual.">'
+						+ escapeHTML(day.timetable.subjects[day.timetable.timetable.periods[day.bells[i].bell].year
 							+ day.timetable.timetable.periods[day.bells[i].bell].title].title)
 						+ '</p></td>';
 
@@ -61,10 +61,10 @@
 					+ '</td><td class="roomCell"></td>';
 				}
 				
-				constructed += "</tr>";
+				constructed += '</tr>';
 			}
 
-			$("#belltimes table").append(constructed);
+			$('#belltimes table').append(constructed);
 			showNextPeriod();
 
 		});
@@ -76,48 +76,51 @@
 function showNextPeriod() {
 	var now  = new Date();
 	var bell = new Date(day.date);
+
+	bell.setSeconds(0);
+	bell.setMilliseconds(0);
+
 	var splitted;
 
 	for(var i=0; i<day.bells.length; i++) {
 
-		splitted = day.bells[i].time.split(":");
+		splitted = day.bells[i].time.split(':');
 
 		bell.setHours(splitted[0]);
 		bell.setMinutes(splitted[1]);
 
 
 		if (bell > now) {
-			if (day.bells[i].bellDisplay)
 
-				var nextPeriod = day.timetable.timetable.periods[day.bells[i].bell];
-			$("#next").text(nextPeriod && nextPeriod.year ? day.timetable.subjects[nextPeriod.year + nextPeriod.title].subject
-			|| day.timetable.subjects[nextPeriod.year + nextPeriod.title].title
-			: day.bells[i].bellDisplay);
+			var nextPeriod = day.timetable.timetable.periods[day.bells[i].bell];
+			$('#next').text(nextPeriod && nextPeriod.year ? day.timetable.subjects[nextPeriod.year + nextPeriod.title].subject
+				|| day.timetable.subjects[nextPeriod.year + nextPeriod.title].title
+				: day.bells[i].bellDisplay);
 
-			if (nextPeriod && nextPeriod.room) {$("#next").text($("#next").text() + " (" + nextPeriod.room +")");}
+			if (nextPeriod && nextPeriod.room) {$('#next').text($('#next').text() + ' (' + nextPeriod.room +')');}
 
 			window.updateLoop = setInterval(function () {
 
 				var units = countdown.HOURS | countdown.MINUTES | countdown.SECONDS,
 				now   = new Date(),
 				ts    = countdown(bell, now, units),
-				msg   = "",
+				msg   = '',
 				value,
 				humanisedValues = [];
 
 				value = ts.hours;
-				if (value) {humanisedValues.push(twoPad(value)+"h");}
+				if (value) {humanisedValues.push(twoPad(value)+'h');}
 
-				humanisedValues.push(twoPad(ts.minutes)+"m");
-				humanisedValues.push(twoPad(ts.seconds)+"s");
-				msg = humanisedValues.join(", ");
+				humanisedValues.push(twoPad(ts.minutes)+'m');
+				humanisedValues.push(twoPad(ts.seconds)+'s');
+				msg = humanisedValues.join(', ');
 
 
 				if (now > bell) {
 					clearInterval(updateLoop);
 					showNextPeriod();
 				} else {
-					$("#time").text(msg);
+					$('#time').text(msg);
 				}
 			}, 1000);
 
@@ -131,50 +134,49 @@ function showNextPeriod() {
 }
 
 function getNotices() {
-	$.getJSON( "/api/dailynotices.json", function( data ) {
+	$.getJSON( '/api/dailynotices.json', function( data ) {
 
 		if (data.notices) {
-			$("#week").empty();
-			$("#week").append($("<b>", {"text": ('Week ' + data.dayInfo.week + data.dayInfo.weekType)}));
+			$('#week').text('Week ' + data.dayInfo.week + data.dayInfo.weekType);
 
 			var newNotice;
 			for(var i=0; i<data.notices.length; i++) {
 
-				newNotice = $("<div>");
+				newNotice = $('<div>');
 
-				$("<p>", {
-					"text": data.notices[i].title,
-					"class": "title"
+				$('<p>', {
+					'text': data.notices[i].title,
+					'class': 'title'
 				}).appendTo(newNotice);
 
-				if (data.notices[i].isMeeting === "1") {
-					$("<p>", {
-						"text": data.notices[i].meetingTime
-						+ ", "
+				if (data.notices[i].isMeeting === '1') {
+					$('<p>', {
+						'text': data.notices[i].meetingTime
+						+ ', '
 						+ (new Date(data.notices[i].meetingDate)).toLocaleDateString()
-						+ " in "
+						+ ' in '
 						+ data.notices[i].meetingLocation
-						+ "."
+						+ '.'
 					}).appendTo(newNotice);
 				}
 
-				$("<br>").appendTo(newNotice);
+				$('<br>').appendTo(newNotice);
 
 				$(data.notices[i].content).appendTo(newNotice);
 
-				$("<p>", {
-					"text": data.notices[i].authorName,
-					"class": "author"
-				}).css("float", "left").appendTo(newNotice);
+				$('<p>', {
+					'text': data.notices[i].authorName,
+					'class': 'author'
+				}).css('float', 'left').appendTo(newNotice);
 
-				$("<p>", {
-					"text": data.notices[i].displayYears,
-					"class": "author"
-				}).css("float", "right").appendTo(newNotice);
+				$('<p>', {
+					'text': data.notices[i].displayYears,
+					'class': 'author'
+				}).css('float', 'right').appendTo(newNotice);
 
 
 
-				$("#notices").append(newNotice);
+				$('#notices').append(newNotice);
 
 			}
 		}

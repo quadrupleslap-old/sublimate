@@ -1,12 +1,246 @@
 <html>
-	<head>
-		<title>Sublimate</title>
-		<link rel="stylesheet" type="text/css" href="/css/style.css">
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="/js/countdown.js"></script>
-	</head>
+<head>
+	<title>Sublimate</title>
+	<link rel='stylesheet' type='text/css' href='/css/style.css'>
+	<script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+	<script src='/js/countdown.js'></script>
+	<script type='text/javascript'>
 
-	<body>
-		You be offline! Arrgh!
-	</body>
+	$(function() {
+		window.allBells = [[
+		{'name':'School Starts', 'time':'09:00'},
+		{'name':'1', 'time':'09:05'},
+		{'name':'Transition', 'time':'10:05'},
+		{'name':'2', 'time':'10:10'},
+		{'name':'Lunch 1', 'time':'11:10'},
+		{'name':'Lunch 2', 'time':'11:30'},
+		{'name':'3', 'time':'11:50'},
+		{'name':'Transition', 'time':'12:50'},
+		{'name':'4', 'time':'12:55'},
+		{'name':'Recess', 'time':'13:55'},
+		{'name':'5', 'time':'14:15'},
+		{'name':'End of Day', 'time':'15:15'}
+		],[
+		{'name':'School Starts', 'time':'09:00'},
+		{'name':'1', 'time':'09:05'},
+		{'name':'Transition', 'time':'10:05'},
+		{'name':'2', 'time':'10:10'},
+		{'name':'Recess', 'time':'11:10'},
+		{'name':'3', 'time':'11:30'},
+		{'name':'Lunch 1', 'time':'12:30'},
+		{'name':'Lunch 2', 'time':'12:50'},
+		{'name':'4', 'time':'13:10'},
+		{'name':'Transition', 'time':'14:10'},
+		{'name':'5', 'time':'14:15'},
+		{'name':'End of Day', 'time':'15:15'}
+		],[
+		{'name':'School Starts', 'time':'09:25'},
+		{'name':'1', 'time':'09:30'},
+		{'name':'Transition', 'time':'10:25'},
+		{'name':'2', 'time':'10:30'},
+		{'name':'Lunch 1', 'time':'11:25'},
+		{'name':'Lunch 2', 'time':'11:45'},
+		{'name':'3', 'time':'12:05'},
+		{'name':'Transition', 'time':'13:00'},
+		{'name':'4', 'time':'13:05'},
+		{'name':'Recess', 'time':'14:00'},
+		{'name':'5', 'time':'14:20'},
+		{'name':'End of Day', 'time':'15:15'}
+		]];
+
+		window.schoolWeeks = [
+		5,6,7,8,9,10,11,12,13,14,15,
+		18,19,20,21,22,23,24,25,26,
+		29,30,31,32,33,34,35,36,37,38,
+		41,42,43,44,45,46,47,48,49,50,51
+		];
+
+		Date.prototype.getWeek = function() {
+			var onejan = new Date(this.getFullYear(),0,1);
+			onejan.setDate(onejan.getDate() - (onejan.getDay() + 6) % 7);
+			var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
+			var dayOfYear = ((today - onejan + 86400000)/86400000);
+			return Math.ceil(dayOfYear/7)
+		};
+
+		$.getJSON( '/api/timetable.json', function( data ) {
+			window.timetable = data;
+			getDayInfo();
+		});
+	});
+
+function getDayInfo (date) {
+	date = date || new Date();
+	
+	date.setSeconds(0);
+	date.setMilliseconds(0);
+
+	var now = new Date();
+
+	var weekIndex = $.inArray(date.getWeek(), schoolWeeks) % 3;
+	var weekType = ['A','B','C'][weekIndex];
+
+	$('#week').text(weekType ? ('Week ' + weekType) : 'Holidays!');
+
+	var day = date.getDay();
+	var dayType;
+	if (day == 1 || day == 2) {
+		dayType = 0;
+	} else if (day == 3 || day == 4) {
+		dayType = 1;
+	} else if (day == 5) {
+		dayType = 2;
+	}
+
+	window.bells = allBells[dayType];
+
+	var lastBell = new Date(date.valueOf());
+	lastBell.setHours(15);
+	lastBell.setMinutes(15);
+
+	if (lastBell < now) {
+		setTimeout(function() {
+			date.setDate(date.getDate() + 1);
+			getDayInfo(date);
+		}, 0);
+		return;
+	}
+
+	if (day == 0) {
+		setTimeout(function() {
+			date.setDate(date.getDate() + 1);
+			getDayInfo(date);
+		}, 0);
+		return;
+	} else if (day == 6) {
+		setTimeout(function() {
+			date.setDate(date.getDate() + 2);
+			getDayInfo(date);
+		}, 0);
+		return;
+	} else {
+		window.periods = timetable.days[
+		(weekIndex * 5) + day
+		].periods;
+	}
+
+	console.log(periods);
+
+	$('#belltimes table').empty();
+
+	var constructed = '';
+
+	for(var i=0; i<bells.length; i++) {
+
+		constructed += '<tr>'
+
+
+		if (periods[bells[i].name]) {
+			constructed += '<td class="timeCell">'
+			+ bells[i].time
+			+ '</td><td>'
+			+ periods[bells[i].name].year + periods[bells[i].name].title
+			+ '</td><td class="roomCell">'
+			+ periods[bells[i].name].room
+			+ '</td>';
+
+		} else {
+
+			constructed += '<td class="timeCell">'
+			+ bells[i].time
+			+ '</td><td>'
+			+ bells[i].name
+			+ '</td>';
+		}
+		constructed += '</tr>';
+	}
+
+	$('#belltimes table').append(constructed);
+
+	showNextPeriod(date);
+
+}
+
+function showNextPeriod(bell) {
+	var now  = new Date();
+	bell = bell || new Date();
+	var splitted;
+
+	for(var i=0; i<bells.length; i++) {
+
+		splitted = bells[i].time.split(':');
+
+		bell.setHours(splitted[0]);
+		bell.setMinutes(splitted[1]);
+
+
+		if (bell > now) {
+
+			var nextBell = bells[i];
+			$('#next').text(periods[nextBell.name] ?
+				periods[bells[i].name].year + periods[nextBell.name].title + ' (' + periods[nextBell.name].room + ')'
+				: nextBell.name
+				);
+
+			window.updateLoop = setInterval(function () {
+
+				var units = countdown.HOURS | countdown.MINUTES | countdown.SECONDS,
+				now   = new Date(),
+				ts    = countdown(bell, now, units),
+				msg   = '',
+				value,
+				humanisedValues = [];
+
+				value = ts.hours;
+				if (value) {humanisedValues.push(twoPad(value)+'h');}
+
+				humanisedValues.push(twoPad(ts.minutes)+'m');
+				humanisedValues.push(twoPad(ts.seconds)+'s');
+				msg = humanisedValues.join(', ');
+
+
+				if (now > bell) {
+					clearInterval(updateLoop);
+					showNextPeriod(bell);
+				} else {
+					$('#time').text(msg);
+				}
+			}, 1000);
+
+			return;
+		}
+
+	}
+
+	getDayInfo();
+
+}
+
+</script>
+</head>
+
+<body>
+	<div id="belltimes-decoration"></div>
+
+	<div class="outer">
+		<div class="middle">
+			<div id="belltimes">
+				<table></table>
+			</div>
+
+			<div id="right-side">
+				<div>
+					<p class="subtext" id="week"></p>
+					<p id="next">Loading</p>
+					<p class="subtext" id="inLabel">in</p>
+					<p id="time">00h, 00m, 00s</p>
+				</div>
+
+				<div id="notices">
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
 </html>

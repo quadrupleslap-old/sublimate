@@ -36,7 +36,6 @@ var SBHS = new SBHSStrategy({
 },
 function(accessToken, refreshToken, profile, done) {
     var now = new Date();
-    console.log(profile.givenName + ' ' + profile.surname + ' logged in!');
     profile.tokens = {accessToken: accessToken, refreshToken: refreshToken, expires: (new Date(now.getTime() + 3600000)).valueOf()};
         done(null,profile);
     });
@@ -102,7 +101,7 @@ app.get('/api/dailynotices.json', function(req,res) {
             } else {
                 res.status(500).send(err);
             }
-        });
+        }, req.query.date);
      });
     } else {
         res.status(401).send("401 Unauthorized");
@@ -136,7 +135,7 @@ app.get('/api/daytimetable.json', function(req,res) {
             } else {
                 res.status(500).send(err);
             }
-        });
+        }, req.query.date);
      });
     } else {
         res.status(401).send("401 Unauthorized");

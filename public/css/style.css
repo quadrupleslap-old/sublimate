@@ -77,12 +77,22 @@ p {
 	color: red;
 }
 
+#simple:target {
+	color: white;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	
+}
 
 @media screen and (orientation:landscape) {
 
 	body {
 		background:url("/img/background.png") white;
-		background-attachment: fixed;
+			
 	}
 
 	#belltimes {
@@ -97,7 +107,7 @@ p {
 
 	#belltimes-decoration {
 		position: fixed;
-		background-color: rgba(255,255,255,0.25);
+		background-color: rgba(255,255,255,0.5);
 		top: 0;
 		left: 0;
 		width: 36%;
@@ -130,7 +140,7 @@ p {
 	}
 
 	#notices div {
-		background-color: rgba(255,255,255,0.25);
+		background-color: rgba(255,255,255,0.5);
 		margin: 3%;
 		width: 88%;
 		padding: 2vw;
