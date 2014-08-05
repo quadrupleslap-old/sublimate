@@ -1,75 +1,53 @@
-<!-- <!DOCTYPE html>
+  <head>
+    <title>Sublimate</title>
 
-<head>
-	<title>Sublimate</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/login.css">
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<link rel="icon" sizes="196x196" href="/img/icon.png">
-	<link rel="apple-touch-icon" sizes="196x196" href="/img/icon.png">
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/js/common.js"></script>
+
+    <script src="/js/unauthenticated.js"></script>
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="196x196" href="/img/icon.png">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon-precomposed" sizes="
+    196x196" href="/img/icon.png">
+
     <meta name="application-name" content="Sublimate"/>
     <meta name="msapplication-config" content="ieconfig.xml" />
-	<link rel="icon" 
-      type="image/x-icon" 
-      href="/img/favicon.ico">
-</head>
 
-<body>
-	<a id="button" href="/login"><img alt="Login" src="https://login.sbhs.net.au/shssupport/assets/images/sbhs-white.gif" />Login with SBHS</a>
-    <div id="footer">
-        <p>CC BY-SA 3.0 - Subtle Patterns © Atle Mo.</p>
-    </div>
-</body> -->
+    <link rel="icon" 
+    type="image/x-icon" 
+    href="/img/favicon.ico">
 
-<head>
-  <title>Sublimate</title>
-
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/css/login.css">
-
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="/js/countdown.js"></script>
-  
-  <script src="/js/unauthenticated.js"></script>
-
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" sizes="196x196" href="/img/icon.png">
-
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <link rel="apple-touch-icon-precomposed" sizes="
-  196x196" href="/img/icon.png">
-
-  <meta name="application-name" content="Sublimate"/>
-  <meta name="msapplication-config" content="ieconfig.xml" />
-
-  <link rel="icon" 
-  type="image/x-icon" 
-  href="/img/favicon.ico">
-
-</head>
+  </head>
 
 
-<body>
+  <body>
 
-  <div id="belltimes-decoration"></div>
+    <div id="belltimes-decoration"></div>
 
-  <div class="outer">
-    <div class="middle">
-      <div id="belltimes">
-        <table></table>
-      </div>
+    <div class="outer">
+      <div class="middle">
+        <div id="belltimes">
+          <table></table>
+        </div>
 
-      <div id="right-side">
-        <div>
+        <div id="right-side">
           <p class="subtext" id="week"></p>
-          <p id="next">Loading</p>
-          <p class="subtext">in</p>
-          <p id="time">00h, 00m, 00s</p>
+
+          <div id="main" onclick="$('#main').toggleClass('simpleMode')" class="outer"><div class="middle">
+            <p id="next">Loading</p>
+            <p class="subtext" id="inLabel">in</p>
+            <p id="time">00h, 00m, 00s</p>
+          </div></div>
+
           <a id="button" href="/login">Login with SBHS</a>
         </div>
 
       </div>
-
     </div>
-  </div>
-</body>
+  </body>

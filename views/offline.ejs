@@ -3,7 +3,7 @@
 	<title>Sublimate</title>
 	<link rel='stylesheet' type='text/css' href='/css/style.css'>
 	<script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
-	<script src='/js/countdown.js'></script>
+	<script src='/js/common.js'></script>
 	<script type='text/javascript'>
 
 	$(function() {
@@ -124,8 +124,6 @@ function getDayInfo (date) {
 		].periods;
 	}
 
-	console.log(periods);
-
 	$('#belltimes table').empty();
 
 	var constructed = '';
@@ -229,15 +227,13 @@ function showNextPeriod(bell) {
 			</div>
 
 			<div id="right-side">
-				<div>
-					<p class="subtext" id="week"></p>
+				<p class="subtext" id="week"></p>
+
+				<div id="main" onclick="$('#main').toggleClass('simpleMode')" class="outer"><div class="middle">
 					<p id="next">Loading</p>
 					<p class="subtext" id="inLabel">in</p>
 					<p id="time">00h, 00m, 00s</p>
-				</div>
-
-				<div id="notices">
-				</div>
+				</div></div>
 			</div>
 
 		</div>

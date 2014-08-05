@@ -1,4 +1,6 @@
+/*--- Common ---*/
 
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,300);
 
 body {
 	text-align: center;
@@ -6,7 +8,7 @@ body {
 	padding:0;
 	height:100%;
 	color: black;
-	font: 12px "Helvetica Neue",Helvetica,Impact,Verdana,Geneva,"Lucida Grande","Franklin Gothic Book",sans-serif;
+	font: 12px "Roboto", "Helvetica Neue",Helvetica,Impact,Verdana,"Lucida Grande","Franklin Gothic Book",sans-serif;
 	font-weight: 100;
 	letter-spacing: 1px;
 	cursor: default;
@@ -21,8 +23,7 @@ p {
 	margin: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	}
-
+}
 
 .timeCell {
 	width: 25%;
@@ -50,9 +51,6 @@ p {
 	cursor: help;
 }
 
-
-
-
 #belltimes {
 	margin: auto;
 	table-layout: fixed;
@@ -77,7 +75,7 @@ p {
 	color: red;
 }
 
-#simple:target {
+.simpleMode {
 	color: white;
 	position: fixed;
 	top: 0;
@@ -85,8 +83,9 @@ p {
 	height: 100%;
 	width: 100%;
 	background-color: black;
-	
 }
+
+/*--- Full-Featured, Beautiful ---*/
 
 @media screen and (orientation:landscape) {
 
@@ -160,6 +159,8 @@ p {
 	}
 
 }
+
+/*--- Phones and Windows 8 Dual-Thingy ---*/
 
 @media screen and (orientation:portrait) {
 
