@@ -3,6 +3,8 @@ id     = config.id,
 secret = config.secret,
 host   = config.host;
 
+var port = process.env.VCAP_APP_PORT || 80;
+
 var express  = require('express'),
 app          = express(),
 ejs          = require('ejs'),

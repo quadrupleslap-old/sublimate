@@ -5,7 +5,7 @@
 
 	function getDay() {
 		$.getJSON( '/api/daytimetable.json', function( data ) {
-			
+
 			window.day = data;
 			day.bells[0].bellDisplay = 'School Starts';
 
@@ -16,7 +16,7 @@
 			for(var i=0; i<day.bells.length; i++) {
 
 				constructed += '<tr>'
-				
+
 
 				if(day.timetable.timetable.periods[day.bells[i].bell] && day.timetable.timetable.periods[day.bells[i].bell].room) {
 
@@ -24,7 +24,7 @@
 
 					if (day.bells[i].bell in day.classVariations) {
 
-						constructed += '<td><p class="rollover" title="'
+						constructed += '<td><p class="rollover" onclick="rollover(this)" title="'
 						+ escapeHTML(day.classVariations[day.bells[i].bell].title
 							+ ' has '
 							+ day.classVariations[day.bells[i].bell].casualSurname.trim())
@@ -60,7 +60,7 @@
 					+ escapeHTML(day.bells[i].bellDisplay)
 					+ '</td><td class="roomCell"></td>';
 				}
-				
+
 				constructed += '</tr>';
 			}
 
@@ -143,6 +143,7 @@ function getNotices() {
 			for(var i=0; i<data.notices.length; i++) {
 
 				newNotice = $('<div>');
+				newNotice.addClass('contrast');
 
 				$('<p>', {
 					'text': data.notices[i].title,

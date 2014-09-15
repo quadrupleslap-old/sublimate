@@ -2,13 +2,24 @@
 
 @import url(http://fonts.googleapis.com/css?family=Roboto:100,300);
 
+a {
+  color:blue;
+  text-decoration: none;
+  -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  transition:.5s;
+}
+a:hover { color:red; }
+
 body {
 	text-align: center;
 	margin:0;
 	padding:0;
 	height:100%;
 	color: black;
-	font: 12px "Roboto", "Helvetica Neue",Helvetica,Impact,Verdana,"Lucida Grande","Franklin Gothic Book",sans-serif;
+	font: 12px "Helvetica Neue","Roboto",Helvetica,Impact,Verdana,"Lucida Grande","Franklin Gothic Book",sans-serif;
 	font-weight: 100;
 	letter-spacing: 1px;
 	cursor: default;
@@ -91,7 +102,7 @@ p {
 
 	body {
 		background:url("/img/background.png") white;
-			
+
 	}
 
 	#belltimes {
@@ -104,9 +115,12 @@ p {
 		overflow: scroll;
 	}
 
+	.contrast {
+		background-color: rgba(255,255,255,0.3);
+	}
+
 	#belltimes-decoration {
 		position: fixed;
-		background-color: rgba(255,255,255,0.5);
 		top: 0;
 		left: 0;
 		width: 36%;
@@ -139,7 +153,6 @@ p {
 	}
 
 	#notices div {
-		background-color: rgba(255,255,255,0.5);
 		margin: 3%;
 		width: 88%;
 		padding: 2vw;
@@ -182,7 +195,7 @@ p {
 	#next {
 		margin-top: 4vh;
 		font-size: 4vh;
-	}	
+	}
 
 	#belltimes td {
 		padding: 1vh;
@@ -196,4 +209,10 @@ p {
 	#week {
 		display: none;
 	}
+}
+
+* {
+	transition: background 0.25s ease;
+	transition: position: 2s ease;
+  transition:all 1.0s ease-in-out;
 }
