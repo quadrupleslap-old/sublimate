@@ -16,3 +16,73 @@ q="milliseconds seconds minutes hours days weeks months years decades centuries 
 function rollover(element) {
   alert($(element).attr('title'))
 }
+
+function fitImageInBox(url, width, height, callback) {
+  var img = new Image();
+
+  img.onload = function (evt) {
+        var canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        var imgRatio = img.width / img.height;
+        var canvasRatio = canvas.width / canvas.height;
+
+        var resultImageH, resultImageW;
+
+        if(imgRatio < canvasRatio) {
+            resultImageH = canvas.height;
+            resultImageW = resultImageH * imgRatio;
+        }
+        else {
+            resultImageW = canvas.width;
+            resultImageH = resultImageW / imgRatio;
+        }
+
+        canvas.width = resultImageW;
+        canvas.height= resultImageH;
+        canvas.getContext("2d").drawImage(img, 0, 0, resultImageW, resultImageH);
+        callback(canvas.toDataURL());
+      }
+
+  img.src = url;
+}
+
+// Common Helper Code
+
+window.customise = {
+  displayImage: function () {
+    var overlayColor, defaultColor;
+    if (localStorage.classicMode == "1") overlayColor = "rgba(255,255,255,0.6)", defaultColor = "#444"
+    else                                 overlayColor = "rgba(0,0,0,0.8)",       defaultColor = "#000"
+
+    var imageURL = localStorage.getItem('background-image') || "";
+    $('html').css({'background': 'linear-gradient('+overlayColor+','+overlayColor+'), '+defaultColor+' url('+imageURL+')',
+                   'background-size': 'cover',
+                   'background-attachment': 'fixed',
+                   'background-position': 'center'
+                 })
+  },
+  requestImage: function () {
+    var that = this;
+    var input = $("<input type='file' accept='image/*'>").click()
+    input.on('change', function (e) { if ( input[0].files && input[0].files[0] ) {
+      var FR = new FileReader();
+      FR.onload = function(e) {
+        dataURI = fitImageInBox(e.target.result, 1280, 720, function (b64) {
+         localStorage.setItem('background-image', e.target.result);
+         that.displayImage()
+        });
+     };
+     FR.readAsDataURL( input[0].files[0] );
+   }})
+  }
+  //TODO colours maybe, or maybe just bright and dark =P ooh and the most important part - choosing which years' daily notices you want to view
+}
+
+$(document).on('DOMContentLoaded', function (e) {
+  if (localStorage['classicMode'] == '1') {
+    $("html").addClass('classic')
+  }
+  customise.displayImage();
+})

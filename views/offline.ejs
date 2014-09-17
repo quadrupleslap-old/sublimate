@@ -71,7 +71,7 @@
 
 function getDayInfo (date) {
 	date = date || new Date();
-	
+
 	date.setSeconds(0);
 	date.setMilliseconds(0);
 
@@ -218,7 +218,6 @@ function showNextPeriod(bell) {
 </head>
 
 <body>
-	<div id="belltimes-decoration" class="contrast"></div>
 
 	<div class="outer">
 		<div class="middle">
@@ -229,7 +228,7 @@ function showNextPeriod(bell) {
 			<div id="right-side">
 				<p class="subtext" id="week"></p>
 
-				<div id="main" onclick="$('#main').toggleClass('simpleMode')" class="outer"><div class="middle">
+				<div id="main" onclick="$(this).toggleClass('simpleMode')" class="outer"><div class="middle">
 					<p id="next">Loading</p>
 					<p class="subtext" id="inLabel">in</p>
 					<p id="time">00h, 00m, 00s</p>
@@ -238,5 +237,7 @@ function showNextPeriod(bell) {
 
 		</div>
 	</div>
+
+<%- include ../partials/contextmenu.ejs %>
 </body>
 </html>

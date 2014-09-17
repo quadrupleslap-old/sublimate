@@ -19,16 +19,14 @@
     <meta name="application-name" content="Sublimate"/>
     <meta name="msapplication-config" content="ieconfig.xml" />
 
-    <link rel="icon" 
-    type="image/x-icon" 
+    <link rel="icon"
+    type="image/x-icon"
     href="/img/favicon.ico">
 
   </head>
 
 
   <body>
-
-    <div id="belltimes-decoration" class="contrast"></div>
 
     <div class="outer">
       <div class="middle">
@@ -39,7 +37,7 @@
         <div id="right-side">
           <p class="subtext" id="week"></p>
 
-          <div id="main" onclick="$('#main').toggleClass('simpleMode')" class="outer"><div class="middle">
+          <div id="main" onclick="$(this).toggleClass('simpleMode')" class="outer"><div class="middle">
             <p id="next">Loading</p>
             <p class="subtext" id="inLabel">in</p>
             <p id="time">00h, 00m, 00s</p>

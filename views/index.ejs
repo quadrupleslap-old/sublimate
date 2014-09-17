@@ -1,13 +1,8 @@
-<html >
+<html>
 <head>
 	<title>Sublimate</title>
 
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
-
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="/js/common.js"></script>
-	
-	<script src="/js/authenticated.js"></script>
 
 	<meta name="mobile-web-app-capable" content="yes">
 	<link rel="icon" sizes="196x196" href="/img/icon.png">
@@ -19,7 +14,7 @@
 	<meta name="msapplication-config" content="ieconfig.xml" />
 
 	<link rel="icon"
-	type="image/x-icon" 
+	type="image/x-icon"
 	href="/img/favicon.ico">
 
 </head>
@@ -29,7 +24,6 @@
 
 	<iframe src="/registercache.html" style="display: none;"></iframe>
 
-	<div id="belltimes-decoration" class="contrast"></div>
 
 	<div class="outer">
 		<div class="middle">
@@ -40,7 +34,7 @@
 			<div id="right-side">
 				<p class="subtext" id="week"></p>
 
-				<div id="main" onclick="$('#main').toggleClass('simpleMode')" class="outer"><div class="middle">
+				<div id="main" onclick="$(this).toggleClass('simpleMode')" class="outer"><div class="middle">
 					<p id="next">Loading</p>
 					<p class="subtext" id="inLabel">in</p>
 					<p id="time">00h, 00m, 00s</p>
@@ -52,5 +46,11 @@
 
 		</div>
 	</div>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="/js/common.js"></script>
+	<script src="/js/authenticated.js"></script>
+
+<%- include ../partials/contextmenu.ejs %>
 </body>
 </html>

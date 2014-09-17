@@ -3,38 +3,28 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:100,300);
 
 a {
-  color:#0af;
+  color:blue;
   text-decoration: none;
-  transition:.3s;
-  cursor: pointer;
+  transition:.5s;
 }
 a:hover { color:red; }
 
-.highlight {color:#bf4}
-
-.notice {
-	border-radius: 5px;
-	background: rgba(0,0,0,0.1);
-}
-
 body {
 	text-align: center;
-	margin:0;padding:0;
-	color:#fff;
-	font: 12px "Helvetica Neue", Roboto, Helvetica, "Gill Sans", sans-serif;
+	margin:0;
+	padding:0;
+	height:100%;
+	color: black;
+	font: 12px "Helvetica Neue","Roboto",Helvetica,Impact,Verdana,"Lucida Grande","Franklin Gothic Book",sans-serif;
 	font-weight: 100;
-	letter-spacing: 0.1px;
-
-	-ms-overflow-style: none;
-
+	letter-spacing: 1px;
 	cursor: default;
-
-	-ms-user-select:none;
-	-moz-user-select:none;
-	-webkit-user-select:none;
+     -ms-overflow-style: none;
 }
 
-::-webkit-scrollbar {display: none}
+::-webkit-scrollbar {
+    display: none;
+}
 
 p {
 	margin: 0;
@@ -42,10 +32,12 @@ p {
 	text-overflow: ellipsis;
 }
 
-.timeCell {width: 25%}
+.timeCell {
+	width: 25%;
+}
+
 .roomCell {
 	width: 20%;
-	text-align: right
 }
 
 .outer {
@@ -78,27 +70,39 @@ p {
 
 #belltimes td
 {
-	font-weight: 300;
 	white-space: nowrap;
+	font-weight: 300;
+	letter-spacing: 0px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
-.simpleMode {
-	color:#fff;
-	position: fixed;
-	top:0;left:0;
-	height:100%;width:100%;
-	background:black;
+.definite {
+	color: red;
 }
 
-#notices div .author {
-	color: #bbb;
+.prospective {
+	color: darkgreen;
+}
+
+.simpleMode {
+	color: white;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: black;
 }
 
 /*--- Full-Featured, Beautiful ---*/
 
 @media screen and (orientation:landscape) {
+
+	body {
+		background:url("/img/background.png") white;
+
+	}
 
 	#belltimes {
 		position: fixed;
@@ -109,10 +113,10 @@ p {
 		height: 100%;
 		box-sizing: border-box;
 		overflow: scroll;
+	}
 
-		border-right-style: solid;
-		border-width: 0px 1px 0px 0px;
-		border-image: linear-gradient(to bottom, transparent, #aaa, transparent) 0 100%;
+	.contrast {
+		background-color: rgba(255,255,255,0.3);
 	}
 
 	#right-side {
@@ -124,12 +128,21 @@ p {
 		float: right;
 	}
 
-	#time {font-size: 7vw}
+	#time {
+		font-size: 7vw;
+	}
 
-	.subtext {font-size: 2vw}
+	.subtext {
+		font-size: 2vw;
+	}
 
-	#next {font-size: 4vw}
-	#belltimes td {font-size: 2vw}
+	#next {
+		font-size: 4vw;
+	}
+
+	#belltimes td {
+		font-size: 2vw;
+	}
 
 	#notices div {
 		margin: 3%;
@@ -137,21 +150,25 @@ p {
 		padding: 2vw;
 		padding-bottom: 3vw;
 		text-align: left;
-		font-weight: 300;
-		font-size: 18px;
+		font-weight: normal;
+		letter-spacing: 0;
+		font-size: 1vw;
 	}
 
 	#notices div .title {
-		font-size: 28px;
+		font-size: 2vw;
 	}
 
-	#week {font-weight: 300}
+	#notices div .author {
+		color: grey;
+	}
 
 }
 
 /*--- Phones and Windows 8 Dual-Thingy ---*/
 
 @media screen and (orientation:portrait) {
+
 
 	#belltimes {
 		width: 80%;
@@ -177,14 +194,11 @@ p {
 		font-size: 3vh;
 	}
 
-	#notices,#week{
+	#notices{
 		display: none;
 	}
 
+	#week {
+		display: none;
+	}
 }
-
-.classic body {color: black}
-.classic .highlight {color: red}
-.classic #belltimes, .classic .notice {background: rgba(255,255,255,0.3)}
-.classic .notice {border-radius: 0}
-.classic #notices div .author {color: #777}

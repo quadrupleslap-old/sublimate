@@ -1,0 +1,44 @@
+<ul id="contextmenu">
+  <style scoped>
+    ul {
+      display:none;
+
+      z-index:9999;
+      border-radius: 2px;
+      background:#fff;
+      font-family: Arial, sans-serif;
+      position: fixed;
+      margin: 0; padding:5px 0;
+      text-align: left;
+    }
+    li {
+      display: block;
+      padding: 0 25px;
+      color: #333;
+      font-size: 13px;
+      white-space: nowrap;
+      line-height: 25px;
+      cursor: pointer;
+      background: transparent;
+    }
+    li:hover {
+      color: #fff;
+      background: #333;
+    }
+  </style>
+  <li onclick="customise.requestImage()">Change Background</li>
+  <li onclick="alert('Not implemented yet. Sorry!')">Filter Daily Notices</li>
+  <li onclick="localStorage['classicMode']=(localStorage['classicMode']=='1'?'0':'1'); $('html').toggleClass('classic'); customise.displayImage()">Toggle Theme</li>
+  <li onclick="localStorage.clear(); location.reload()">Clear All Data</li>
+</ul>
+
+<script>
+$(function () {
+  $(document).on("contextmenu", function (e) {
+    e.preventDefault();
+    $("#contextmenu").css({left:e.clientX,top:e.clientY}).show();
+  });
+  $(document).on("mousedown mousewheel", function (e) {(!$(e.target).parents("#contextmenu").length > 0) && $("#contextmenu").hide()})
+  $(document).on("mouseup", function (e) {($(e.target).parents("#contextmenu").length > 0) && $("#contextmenu").hide()})
+})
+</script>

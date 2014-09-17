@@ -17,7 +17,6 @@ request        = require('request');
 passport.serializeUser(function(user,done){done(null,user)});
 passport.deserializeUser(function(user,done){done(null,user)});
 
-app.use(require('compression')());
 
 app.use(express.static(__dirname + '/public'));
 express.static.mime.define({'text/cache-manifest': ['appcache']});
@@ -27,6 +26,8 @@ app.use(require('cookie-parser')());
 app.use(require('express-session')({secret: secret, key: id, cookie:{maxAge:7776000000}}));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(require('compression')());
 
 var state = uuid.v4();
 

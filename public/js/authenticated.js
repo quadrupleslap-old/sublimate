@@ -24,7 +24,7 @@
 
 					if (day.bells[i].bell in day.classVariations) {
 
-						constructed += '<td><p class="rollover" onclick="rollover(this)" title="'
+						constructed += '<td><p class="rollover highlight" onclick="rollover(this)" title="'
 						+ escapeHTML(day.classVariations[day.bells[i].bell].title
 							+ ' has '
 							+ day.classVariations[day.bells[i].bell].casualSurname.trim())
@@ -44,7 +44,7 @@
 
 					if (day.bells[i].bell in day.roomVariations) {
 
-						constructed += '<td class="roomCell warning">'
+						constructed += '<td class="roomCell '+changeClass+'">'
 						+ escapeHTML(day.roomVariations[day.bells[i].bell].roomTo)
 						+ '</td>';
 
@@ -142,13 +142,15 @@ function getNotices() {
 			var newNotice;
 			for(var i=0; i<data.notices.length; i++) {
 
-				newNotice = $('<div>');
-				newNotice.addClass('contrast');
+				newNotice = $('<div class="notice">');
+
 
 				$('<p>', {
 					'text': data.notices[i].title,
 					'class': 'title'
 				}).appendTo(newNotice);
+
+				newNotice.append($("<br>"))
 
 				if (data.notices[i].isMeeting === '1') {
 					$('<p>', {
@@ -160,8 +162,6 @@ function getNotices() {
 						+ '.'
 					}).appendTo(newNotice);
 				}
-
-				$('<br>').appendTo(newNotice);
 
 				$(data.notices[i].content).appendTo(newNotice);
 

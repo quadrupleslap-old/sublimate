@@ -1,8 +1,8 @@
 CACHE MANIFEST
-# v7.0
+# v0.9
 
 CACHE:
-/img/favicon.ico
+/img/favicon.png
 /img/background.png
 /css/style.css
 /api/timetable.json
