@@ -1,7 +1,7 @@
 var config = require('./config'),
-id     = config.id,
-secret = config.secret,
-host   = config.host;
+id         = config.id,
+secret     = config.secret,
+callback   = 'http://'+config.host+'/callback';
 
 var port = process.env.VCAP_APP_PORT || 80;
 
@@ -11,8 +11,9 @@ ejs          = require('ejs'),
 passport     = require('passport'),
 SBHSStrategy = require('passport-sbhs'),
 uuid         = require('node-uuid'),
-request        = require('request');
+request      = require('request');
 
+app.use(require('compression')());
 
 passport.serializeUser(function(user,done){done(null,user)});
 passport.deserializeUser(function(user,done){done(null,user)});
@@ -23,11 +24,9 @@ express.static.mime.define({'text/cache-manifest': ['appcache']});
 
 app.set('view engine', 'ejs');
 app.use(require('cookie-parser')());
-app.use(require('express-session')({secret: secret, key: id, cookie:{maxAge:7776000000}}));
+app.use(require('express-session')({secret: secret, key: id, cookie:{maxAge:7776000000 /* 90 Days */}}));
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(require('compression')());
 
 var state = uuid.v4();
 
@@ -35,45 +34,35 @@ var SBHS = new SBHSStrategy({
     clientID: id,
     clientSecret: secret,
     state: state,
-    callbackURL: 'http://'+host+'/callback'
+    callbackURL: callback
 },
 function(accessToken, refreshToken, profile, done) {
     var now = new Date();
-    profile.tokens = {accessToken: accessToken, refreshToken: refreshToken, expires: (new Date(now.getTime() + 3600000)).valueOf()};
-        done(null,profile);
-    });
+    profile.tokens = {accessToken: accessToken, refreshToken: refreshToken, expires: Date.now() + 3600000 /* 1 Hour */};
+    done(null,profile);
+});
 
 passport.use(SBHS);
 
 
 function getTokens(tokens, done) {
-    if (new Date().valueOf() < tokens.expires) {
+    if (Date.now() <= tokens.expires) {
         done(null, tokens);
     } else {
 
     request.post({
-        url: 'https://student.sbhs.net.au/api/token',
-        form: {
-          refresh_token: tokens.refreshToken,
-          client_id:     id,
-          client_secret: secret,
-          grant_type:    'refresh_token'
-      }
-
-  }, function (err, response, body) {
-    if(err) return done(err);
-
-
-    var result = JSON.parse(body);
-
-    var now = new Date();
-    var newTokens = {accessToken: result.access_token, refreshToken: tokens.refreshToken, expires: (new Date(now.getTime() + (result.expires_in * 1000))).valueOf()};
-
-        return done(null, newTokens);
-
+        'uri': 'https://student.sbhs.net.au/api/token',
+        'headers': {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+        'body':'grant_type=refresh_token&refresh_token=' + tokens.refreshToken + '&client_id='+encodeURIComponent(id) + '&client_secret='+ secret
+    }, function (err, response, body) {
+      if(err) return done(err);
+      var result = JSON.parse(body);
+      var now = Date.now();
+      var newTokens = {accessToken: result.access_token,
+                       refreshToken: tokens.refreshToken,
+                       expires: Date.now() + 3600000};
+      return done(null, newTokens);
     });
-
-
 
   }
 };
@@ -119,7 +108,7 @@ app.get('/api/timetable.json', function(req,res) {
             if (!err && o) {
                 res.json(o);
             } else {
-                res.status(500).send(err);
+                res.status(500).send("500 Internal Server Error");
             }
         });
      });
@@ -136,7 +125,7 @@ app.get('/api/daytimetable.json', function(req,res) {
             if (!err && o) {
                 res.json(o);
             } else {
-                res.status(500).send(err);
+                res.status(500).send("500 Internal Server Error");
             }
         }, req.query.date);
      });

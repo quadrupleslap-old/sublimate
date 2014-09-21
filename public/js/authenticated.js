@@ -22,15 +22,13 @@
 
 					constructed += '<td class="timeCell">' + escapeHTML(day.bells[i].time) + '</td>';
 
-					if (day.bells[i].bell in day.classVariations) {
+					if (day.bells[i].bell in day.classVariations && day.classVariations[day.bells[i].bell].type != "novariation") {
+						var message = day.classVariations[day.bells[i].bell].title + (day.classVariations[day.bells[i].bell].type == "replacement" ?
+												' has ' + day.classVariations[day.bells[i].bell].casualSurname.trim() + ' as a casual.' :
+												' doesn\'t have a teacher assigned to it.')
 
-						constructed += '<td><p class="rollover highlight" onclick="rollover(this)" title="'
-						+ escapeHTML(day.classVariations[day.bells[i].bell].title
-							+ ' has '
-							+ day.classVariations[day.bells[i].bell].casualSurname.trim())
-						+ ' as a casual.">'
-						+ escapeHTML(day.timetable.subjects[day.timetable.timetable.periods[day.bells[i].bell].year
-							+ day.timetable.timetable.periods[day.bells[i].bell].title].title)
+						constructed += '<td><p class="rollover highlight" onclick="rollover(this)" title="' + escapeHTML(message) + '">'
+						+ escapeHTML(day.timetable.subjects[day.timetable.timetable.periods[day.bells[i].bell].year + day.timetable.timetable.periods[day.bells[i].bell].title].title)
 						+ '</p></td>';
 
 					} else {
@@ -142,15 +140,12 @@ function getNotices() {
 			var newNotice;
 			for(var i=0; i<data.notices.length; i++) {
 
-				newNotice = $('<div class="notice">');
-
+				newNotice = $('<div class="notice">').data('years', data.notices[i].years);
 
 				$('<p>', {
 					'text': data.notices[i].title,
 					'class': 'title'
 				}).appendTo(newNotice);
-
-				newNotice.append($("<br>"))
 
 				if (data.notices[i].isMeeting === '1') {
 					$('<p>', {

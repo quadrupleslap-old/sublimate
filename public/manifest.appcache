@@ -1,17 +1,18 @@
 CACHE MANIFEST
-# v0.9
+# v0.19
 
 CACHE:
 /img/favicon.png
-/img/background.png
 /css/style.css
 /api/timetable.json
 
 http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
 /js/common.js
+/js/customise.js
 
 NETWORK:
 *
+http://*
 
 FALLBACK:
 / /fallback

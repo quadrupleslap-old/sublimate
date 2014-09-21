@@ -1,44 +1,59 @@
-<ul id="contextmenu">
-  <style scoped>
-    ul {
-      display:none;
+<div class="overlaymenu" id="contextmenu">
+  <div onmousedown="$(this).parent().fadeOut()"></div>
+  <ul      onclick="$(this).parent().fadeOut()">
+    <li onclick="customise.requestImage()">Change Background</li>
+    <li onclick="arguments[0].stopPropagation()">
+      Notices:
+      <style>
+      select {
+        outline: none;
+        padding: 5px;
+        font-size: 14px;
+        border-radius:3px;
+        background: #eee;
+        color:#333;
+        border:none;
 
-      z-index:9999;
-      border-radius: 2px;
-      background:#fff;
-      font-family: Arial, sans-serif;
-      position: fixed;
-      margin: 0; padding:5px 0;
-      text-align: left;
-    }
-    li {
-      display: block;
-      padding: 0 25px;
-      color: #333;
-      font-size: 13px;
-      white-space: nowrap;
-      line-height: 25px;
-      cursor: pointer;
-      background: transparent;
-    }
-    li:hover {
-      color: #fff;
-      background: #333;
-    }
-  </style>
-  <li onclick="customise.requestImage()">Change Background</li>
-  <li onclick="alert('Not implemented yet. Sorry!')">Filter Daily Notices</li>
-  <li onclick="localStorage['classicMode']=(localStorage['classicMode']=='1'?'0':'1'); $('html').toggleClass('classic'); customise.displayImage()">Toggle Theme</li>
-  <li onclick="localStorage.clear(); location.reload()">Clear All Data</li>
-</ul>
+        font: cursive;
+
+        display: inline-block;
+        -webkit-appearance:none;
+        -moz-appearance:none;
+        cursor:pointer;
+      }
+      </style>
+      <select id='noticesFilterSelect' onchange='customise.filterNotices(this.value);$("#contextmenu").fadeOut();localStorage.noticeFilter=this.value;'>
+        <option value=''>All Notices</option>
+        <option value='7'>Year 7</option>
+        <option value='8'>Year 8</option>
+        <option value='9'>Year 9</option>
+        <option value='10'>Year 10</option>
+        <option value='11'>Year 11</option>
+        <option value='12'>Year 12</option>
+      </select>
+    </li>
+    <li onclick='localStorage.classicMode="1"==localStorage.classicMode?"0":"1";$("html").toggleClass("classic");customise.displayImage();'>Toggle Theme</li>
+    <li onclick="localStorage.clear();location.reload()">Clear All Data</li>
+  </ul>
+</div>
 
 <script>
 $(function () {
+  $("#contextmenu").hide();
+
   $(document).on("contextmenu", function (e) {
     e.preventDefault();
-    $("#contextmenu").css({left:e.clientX,top:e.clientY}).show();
+    if (!$(e.originalEvent.target).parents("#contextmenu").length > 0) $("#contextmenu").fadeIn();
   });
-  $(document).on("mousedown mousewheel", function (e) {(!$(e.target).parents("#contextmenu").length > 0) && $("#contextmenu").hide()})
-  $(document).on("mouseup", function (e) {($(e.target).parents("#contextmenu").length > 0) && $("#contextmenu").hide()})
+
+  var pressTimer;
+  $(document).on("touchend touchmove", function(){
+    clearTimeout(pressTimer)
+  }).on('touchstart', function(e){
+    (!$(e.originalEvent.target).parents("#contextmenu").length > 0) && $("#contextmenu").fadeOut();
+    if (e.originalEvent.touches.length == 1) pressTimer = window.setTimeout(function() {
+      $("#contextmenu").fadeIn();
+    },500)
+  });
 })
 </script>

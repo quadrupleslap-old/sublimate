@@ -13,7 +13,7 @@ a:hover { color:red; }
 .highlight {color:#bf4}
 
 .notice {
-	border-radius: 5px;
+	border-radius: 3px;
 	background: rgba(0,0,0,0.1);
 }
 
@@ -21,22 +21,23 @@ body {
 	text-align: center;
 	margin:0;padding:0;
 	color:#fff;
-	font: 12px "Helvetica Neue", Roboto, Helvetica, "Gill Sans", sans-serif;
-	font-weight: 100;
-	letter-spacing: 0.1px;
+	font: 14px "Helvetica Neue", Roboto, Arial, "Lucida Grande", sans-serif;
+	font-weight: 300;
+	letter-spacing: 0.2px;
 
 	-ms-overflow-style: none;
 
 	cursor: default;
 
 	-ms-user-select:none;
-	-moz-user-select:none;
+	user-select:none;
 	-webkit-user-select:none;
 }
 
 ::-webkit-scrollbar {display: none}
 
 p {
+
 	margin: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -73,7 +74,7 @@ p {
 
 #belltimes table {
 	width: 100%;
-	min-height: 100%;
+	height: 100%;
 }
 
 #belltimes td
@@ -85,20 +86,25 @@ p {
 }
 
 .simpleMode {
-	color:#fff;
 	position: fixed;
 	top:0;left:0;
 	height:100%;width:100%;
-	background:black;
 }
 
 #notices div .author {
 	color: #bbb;
 }
 
+
+#main {
+	font-weight: 100;
+}
+
+
+
 /*--- Full-Featured, Beautiful ---*/
 
-@media screen and (orientation:landscape) {
+@media (orientation:landscape) {
 
 	#belltimes {
 		position: fixed;
@@ -125,33 +131,36 @@ p {
 	}
 
 	#time {font-size: 7vw}
-
 	.subtext {font-size: 2vw}
-
 	#next {font-size: 4vw}
 	#belltimes td {font-size: 2vw}
 
 	#notices div {
 		margin: 3%;
 		width: 88%;
-		padding: 2vw;
-		padding-bottom: 3vw;
+		padding: 1vw;
+		padding-bottom: 2vw;
 		text-align: left;
 		font-weight: 300;
-		font-size: 18px;
+		font-size: 1.2vw;
 	}
 
 	#notices div .title {
-		font-size: 28px;
+		font-size: 1.8vw;
+		margin-bottom: 0.6vw;
 	}
 
 	#week {font-weight: 300}
+
+
+	.classic #belltimes, .classic .notice {background: rgba(255,255,255,0.3)}
+	.classic #notices div .author {color: #777}
 
 }
 
 /*--- Phones and Windows 8 Dual-Thingy ---*/
 
-@media screen and (orientation:portrait) {
+@media (orientation:portrait) {
 
 	#belltimes {
 		width: 80%;
@@ -183,8 +192,62 @@ p {
 
 }
 
+/*--- Classic Mode ---*/
 .classic body {color: black}
 .classic .highlight {color: red}
-.classic #belltimes, .classic .notice {background: rgba(255,255,255,0.3)}
-.classic .notice {border-radius: 0}
-.classic #notices div .author {color: #777}
+.classic a {color:blue}
+.classic b
+
+
+/*--- Overlay Menu ---*/
+.overlaymenu {
+  z-index: 999;
+}
+
+.overlaymenu div {
+  background:rgba(0,0,0,0.5);
+  position:fixed;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+}
+.overlaymenu ul {
+  border-radius: 3px;
+  background:#fff;
+  margin: 0; padding:5px 0;
+  text-align: center;
+  border: 1px solid #333;
+
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+
+  min-width: 33%; max-width: 90%;
+  box-sizing: border-box;
+}
+.overlaymenu ul li {
+  display: block;
+  padding: 0 16px;
+  font-size: 18px;
+  line-height: 48px;
+  cursor: pointer;
+
+  background: #fff;
+  color: #333;
+
+  transition:.3s ease-in-out;
+}
+.overlaymenu ul li:hover {
+  color: #fff;
+  background: #333;
+
+  transform:scale(1.1,1.1);
+  -webkit-transform:scale(1.1,1.1);
+}
+
+@media (orientation:portrait) {
+  .overlaymenu ul {
+    width: 80%;
+  }
+}

@@ -1,9 +1,35 @@
 <html>
 <head>
 	<title>Sublimate</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<link rel='stylesheet' type='text/css' href='/css/style.css'>
-	<script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
-	<script src='/js/common.js'></script>
+
+</head>
+
+<body>
+
+	<div class="outer">
+		<div class="middle">
+			<div id="belltimes">
+				<table></table>
+			</div>
+
+			<div id="right-side">
+				<p class="subtext" id="week"></p>
+
+				<div id="main" onclick="$(this).toggleClass('simpleMode')" class="outer"><div class="middle">
+					<p id="next">Loading</p>
+					<p class="subtext" id="inLabel">in</p>
+					<p id="time">00h, 00m, 00s</p>
+				</div></div>
+			</div>
+
+		</div>
+	</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="/js/customise.js"></script>
+<script src='/js/common.js'></script>
 	<script type='text/javascript'>
 
 	$(function() {
@@ -215,28 +241,6 @@ function showNextPeriod(bell) {
 }
 
 </script>
-</head>
-
-<body>
-
-	<div class="outer">
-		<div class="middle">
-			<div id="belltimes">
-				<table></table>
-			</div>
-
-			<div id="right-side">
-				<p class="subtext" id="week"></p>
-
-				<div id="main" onclick="$(this).toggleClass('simpleMode')" class="outer"><div class="middle">
-					<p id="next">Loading</p>
-					<p class="subtext" id="inLabel">in</p>
-					<p id="time">00h, 00m, 00s</p>
-				</div></div>
-			</div>
-
-		</div>
-	</div>
 
 <%- include ../partials/contextmenu.ejs %>
 </body>

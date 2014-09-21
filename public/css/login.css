@@ -1,3 +1,7 @@
+html,body, .simpleMode {
+    background:#bbb;
+    color: black;
+}
 
 #button {
     text-decoration: none;
