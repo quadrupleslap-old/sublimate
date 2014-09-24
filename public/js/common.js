@@ -13,39 +13,41 @@ function(){var a=u(this),b=a.length;if(!b)return"";1<b&&(a[b-1]="and "+a[b-1]);r
 b.push(f(c,4));(c=a.hours)&&b.push(f(c,3));(c=a.minutes)&&b.push(f(c,2));(c=a.seconds)&&b.push(f(c,1));(c=a.milliseconds)&&b.push(f(c,0));return b};d.MILLISECONDS=1;d.SECONDS=2;d.MINUTES=4;d.HOURS=8;d.DAYS=16;d.WEEKS=32;d.MONTHS=64;d.YEARS=128;d.DECADES=256;d.CENTURIES=512;d.MILLENNIA=1024;d.DEFAULTS=222;d.ALL=2047;d.setLabels=function(a,b){a=a||[];a.split&&(a=a.split("|"));b=b||[];b.split&&(b=b.split("|"));for(var c=0;10>=c;c++)p[c]=a[c]||p[c],q[c]=b[c]||q[c]};(d.resetLabels=function(){p="millisecond second minute hour day week month year decade century millennium".split(" ");
 q="milliseconds seconds minutes hours days weeks months years decades centuries millennia".split(" ")})();r&&r.exports?r.exports=d:"function"===typeof window.define&&window.define.amd&&window.define("countdown",[],function(){return d});return d}(module);function escapeHTML(e){return e.replace(/&/g,"&").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}function twoPad(e){return e<10?"0"+e:""+e}
 
+$.fx.speeds._default = 200
+
 function rollover(element) {
   alert($(element).attr('title'))
 }
 
 function fitImageInBox(url, width, height, callback) {
-  var img = new Image();
+  var img = new Image()
 
   img.onload = function (evt) {
-        var canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
+        var canvas = document.createElement("canvas")
 
-        var imgRatio = img.width / img.height;
-        var canvasRatio = canvas.width / canvas.height;
+        canvas.width  = width
+        canvas.height = height
 
-        var resultImageH, resultImageW;
+        var imgRatio    = img.width / img.height,
+            canvasRatio = width / height,
+            resultImageH, resultImageW
 
         if(imgRatio < canvasRatio) {
-            resultImageH = canvas.height;
-            resultImageW = resultImageH * imgRatio;
+            resultImageH = canvas.height
+            resultImageW = resultImageH * imgRatio
         }
         else {
-            resultImageW = canvas.width;
-            resultImageH = resultImageW / imgRatio;
+            resultImageW = canvas.width
+            resultImageH = resultImageW / imgRatio
         }
 
-        canvas.width = resultImageW;
-        canvas.height= resultImageH;
-        canvas.getContext("2d").drawImage(img, 0, 0, resultImageW, resultImageH);
-        callback(canvas.toDataURL());
+        canvas.width  = resultImageW
+        canvas.height = resultImageH
+        canvas.getContext("2d").drawImage(img, 0, 0, resultImageW, resultImageH)
+        callback(canvas.toDataURL())
       }
 
-  img.src = url;
+  img.src = url
 }
 
-$(window).resize(function() {$("*").css("z-index", 1).css("z-index", "")});
+$(window).resize(function() {$("*").css("z-index", 1).css("z-index", "")})

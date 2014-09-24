@@ -20,7 +20,7 @@ passport.serializeUser(function(user,done){done(null,user)});
 passport.deserializeUser(function(user,done){done(null,user)});
 
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public', {maxAge: 2592000000 /*One Month*/}));
 express.static.mime.define({'text/cache-manifest': ['appcache']});
 
 app.set('view engine', 'ejs');
@@ -174,6 +174,6 @@ app.get('/callback', passport.authenticate('sbhs', {
     failureRedirect: '/'
 }));
 
-app.get('/*', function(req, res) {res.redirect('/404.html')})
+app.get('/*', function(req, res) {res.render('404')})
 
 app.listen(port, ip);

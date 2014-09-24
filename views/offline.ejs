@@ -75,107 +75,107 @@
     {'name':'Recess', 'time':'14:00'},
     {'name':'5', 'time':'14:20'},
     {'name':'End of Day', 'time':'15:15'}
-    ]];
+    ]]
 
     window.schoolWeeks=[]
 
     Date.prototype.getWeek = function() {
-      var onejan = new Date(this.getFullYear(),0,1);
-      onejan.setDate(onejan.getDate() - (onejan.getDay() + 6) % 7);
-      var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
-      var dayOfYear = ((today - onejan + 86400000)/86400000);
+      var onejan = new Date(this.getFullYear(),0,1)
+      onejan.setDate(onejan.getDate() - (onejan.getDay() + 6) % 7)
+      var today = new Date(this.getFullYear(),this.getMonth(),this.getDate())
+      var dayOfYear = ((today - onejan + 86400000)/86400000)
       return Math.ceil(dayOfYear/7)
-    };
+    }
 
     $.getJSON('/api/calendar/terms.json', function(data) {
-      window.holidays=Object.keys($.extend({}, data.publicHolidays, data.developmentDays));
+      window.holidays=Object.keys($.extend({}, data.publicHolidays, data.developmentDays))
 
       for (term in data.terms) {
         var i = new Date(data.terms[term].start.date).getWeek(),
             end = new Date(data.terms[term].end.date).getWeek()
         for (; i <= end; i++) {
-            schoolWeeks.push(i);
+            schoolWeeks.push(i)
         }
       }
 
-      window.weekTypeOffset = $.inArray(data.terms["1"].start.weekType, ['A','B','C']);
+      window.weekTypeOffset = $.inArray(data.terms["1"].start.weekType, ['A','B','C'])
 
       $.getJSON( '/api/timetable.json', function( data ) {
-        window.timetable = data;
-        getDayInfo();
-      });
-    });
+        window.timetable = data
+        getDayInfo()
+      })
+    })
 
 
 
-  });
+  })
 
 function getDayInfo (date) {
-  date = date || new Date();
+  date = date || new Date()
 
-  date.setSeconds(0);
-  date.setMilliseconds(0);
+  date.setSeconds(0)
+  date.setMilliseconds(0)
 
-  var now = new Date();
+  var now = new Date()
 
-  var weekIndex = ($.inArray(date.getWeek(), schoolWeeks) + weekTypeOffset) % 3;
-  var weekType = ['A','B','C'][weekIndex];
+  var weekIndex = ($.inArray(date.getWeek(), schoolWeeks) + weekTypeOffset) % 3
+  var weekType = ['A','B','C'][weekIndex]
 
-  $('#week').text('Week ' + weekType);
+  $('#week').text('Week ' + weekType)
 
   if (weekIndex == -1 || $.inArray(date.toISOString().split("T")[0], holidays) != -1) {
     setTimeout(function() {
-      date.setDate(date.getDate() + 1);
-      getDayInfo(date);
-    }, 0);
-    return;
+      date.setDate(date.getDate() + 1)
+      getDayInfo(date)
+    }, 0)
+    return
   }
 
-  var day = date.getDay();
-  var dayType;
+  var day = date.getDay()
+  var dayType
   if (day == 1 || day == 2) {
-    dayType = 0;
+    dayType = 0
   } else if (day == 3 || day == 4) {
-    dayType = 1;
+    dayType = 1
   } else if (day == 5) {
-    dayType = 2;
+    dayType = 2
   }
 
-  window.bells = allBells[dayType];
+  window.bells = allBells[dayType]
 
-  var lastBell = new Date(date.valueOf());
-  lastBell.setHours(15);
-  lastBell.setMinutes(15);
+  var lastBell = new Date(date.valueOf())
+  lastBell.setHours(15)
+  lastBell.setMinutes(15)
 
   if (lastBell < now) {
     setTimeout(function() {
-      date.setDate(date.getDate() + 1);
-      getDayInfo(date);
-    }, 0);
-    return;
+      date.setDate(date.getDate() + 1)
+      getDayInfo(date)
+    }, 0)
+    return
   }
 
   if (day == 0) {
     setTimeout(function() {
-      date.setDate(date.getDate() + 1);
-      getDayInfo(date);
-    }, 0);
-    return;
+      date.setDate(date.getDate() + 1)
+      getDayInfo(date)
+    }, 0)
+    return
   } else if (day == 6) {
     setTimeout(function() {
-      date.setDate(date.getDate() + 2);
-      getDayInfo(date);
-    }, 0);
-    return;
+      date.setDate(date.getDate() + 2)
+      getDayInfo(date)
+    }, 0)
+    return
   } else {
     window.periods = timetable.days[
     (weekIndex * 5) + day
-    ].periods;
+    ].periods
   }
 
-  $('#belltimes table').empty();
+  $('#belltimes table').empty()
 
-  var constructed = '';
+  var constructed = ''
 
   for(var i=0; i<bells.length; i++) {
 
@@ -189,7 +189,7 @@ function getDayInfo (date) {
       + periods[bells[i].name].year + periods[bells[i].name].title
       + '</td><td class="roomCell">'
       + periods[bells[i].name].room
-      + '</td>';
+      + '</td>'
 
     } else {
 
@@ -197,70 +197,74 @@ function getDayInfo (date) {
       + bells[i].time
       + '</td><td>'
       + bells[i].name
-      + '</td>';
+      + '</td>'
     }
-    constructed += '</tr>';
+    constructed += '</tr>'
   }
 
-  $('#belltimes table').append(constructed);
+  $('#belltimes table').append(constructed)
 
-  showNextPeriod(date);
+  showNextPeriod(date)
 
 }
 
 function showNextPeriod(bell) {
-  var now  = new Date();
-  bell = bell || new Date();
-  var splitted;
+  var now  = new Date()
+  bell = bell || new Date()
+  var splitted
 
   for(var i=0; i<bells.length; i++) {
 
-    splitted = bells[i].time.split(':');
+    splitted = bells[i].time.split(':')
 
-    bell.setHours(splitted[0]);
-    bell.setMinutes(splitted[1]);
+    bell.setHours(splitted[0])
+    bell.setMinutes(splitted[1])
 
 
     if (bell > now) {
 
-      var nextBell = bells[i];
+      var nextBell = bells[i]
       $('#next').text(periods[nextBell.name] ?
         periods[bells[i].name].year + periods[nextBell.name].title + ' (' + periods[nextBell.name].room + ')'
         : nextBell.name
-        );
+        )
 
+      tick(bell)
       window.updateLoop = setInterval(function () {
+        tick(bell)
+      }, 1000)
 
-        var units = countdown.HOURS | countdown.MINUTES | countdown.SECONDS,
-        now   = new Date(),
-        ts    = countdown(bell, now, units),
-        msg   = '',
-        value,
-        humanisedValues = [];
-
-        value = ts.hours;
-        if (value) {humanisedValues.push(twoPad(value)+'h');}
-
-        humanisedValues.push(twoPad(ts.minutes)+'m');
-        humanisedValues.push(twoPad(ts.seconds)+'s');
-        msg = humanisedValues.join(', ');
-
-
-        if (now > bell) {
-          clearInterval(updateLoop);
-          showNextPeriod(bell);
-        } else {
-          $('#time').text(msg);
-        }
-      }, 1000);
-
-      return;
+      return
     }
 
   }
 
-  getDayInfo();
+  getDayInfo()
 
+}
+
+function tick (bell) {
+  var units = countdown.HOURS | countdown.MINUTES | countdown.SECONDS,
+        now   = new Date(),
+        ts    = countdown(bell, now, units),
+        msg   = '',
+        value,
+        humanisedValues = []
+
+        value = ts.hours
+        if (value) {humanisedValues.push(twoPad(value)+'h')}
+
+        humanisedValues.push(twoPad(ts.minutes)+'m')
+        humanisedValues.push(twoPad(ts.seconds)+'s')
+        msg = humanisedValues.join(', ')
+
+
+        if (now > bell) {
+          clearInterval(updateLoop)
+          showNextPeriod(bell)
+        } else {
+          $('#time').text(msg)
+        }
 }
 
 </script>
