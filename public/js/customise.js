@@ -27,6 +27,7 @@ window.customise = {
    }})
   },
   filterNotices: function (year) {
+    if (!year) return $('.notice').show();
     $(".notice").each(function (i, obj) {
       if ($(obj).data('years').indexOf(year) != -1) $(obj).show();
       else $(obj).hide();
@@ -35,11 +36,7 @@ window.customise = {
 }
 
 $(function () {
+  if (localStorage.noticeFilter)  $("#noticesFilterSelect").val(localStorage.noticeFilter);
   if (localStorage.classicMode == '1') $("html").addClass('classic');
-  if (localStorage.noticeFilter) {
-    customise.filterNotices(localStorage.noticeFilter);
-    $("#noticesFilterSelect").val(localStorage.noticeFilter)
-  }
-
   customise.displayImage();
 })

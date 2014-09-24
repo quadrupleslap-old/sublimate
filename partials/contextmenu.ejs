@@ -1,28 +1,10 @@
-<div class="overlaymenu" id="contextmenu">
+<div class="overlaymenu" id="contextmenu" style="display: none">
   <div onmousedown="$(this).parent().fadeOut()"></div>
   <ul      onclick="$(this).parent().fadeOut()">
     <li onclick="customise.requestImage()">Change Background</li>
     <li onclick="arguments[0].stopPropagation()">
       Notices:
-      <style>
-      select {
-        outline: none;
-        padding: 5px;
-        font-size: 14px;
-        border-radius:3px;
-        background: #eee;
-        color:#333;
-        border:none;
-
-        font: cursive;
-
-        display: inline-block;
-        -webkit-appearance:none;
-        -moz-appearance:none;
-        cursor:pointer;
-      }
-      </style>
-      <select id='noticesFilterSelect' onchange='customise.filterNotices(this.value);$("#contextmenu").fadeOut();localStorage.noticeFilter=this.value;'>
+      <select id='noticesFilterSelect' onchange='localStorage.noticeFilter=this.value;customise.filterNotices(this.value);$("#contextmenu").fadeOut()'>
         <option value=''>All Notices</option>
         <option value='7'>Year 7</option>
         <option value='8'>Year 8</option>
@@ -39,8 +21,6 @@
 
 <script>
 $(function () {
-  $("#contextmenu").hide();
-
   $(document).on("contextmenu", function (e) {
     e.preventDefault();
     if (!$(e.originalEvent.target).parents("#contextmenu").length > 0) $("#contextmenu").fadeIn();

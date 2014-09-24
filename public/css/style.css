@@ -1,6 +1,18 @@
-/*--- Common ---*/
+/*--- Fonts ---*/
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100;
+  src: url(http://fonts.gstatic.com/s/roboto/v13/vzIUHo9z-oJ4WgkpPOtg13YhjbSpvc47ee6xR_80Hnw.woff) format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: url(http://fonts.gstatic.com/s/roboto/v13/Hgo13k-tfSpn0qi1SFdUfbO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+}
 
-@import url(http://fonts.googleapis.com/css?family=Roboto:100,300);
+/*--- Common ---*/
 
 a {
   color:#0af;
@@ -15,7 +27,12 @@ a:hover { color:red; }
 .notice {
 	border-radius: 3px;
 	background: rgba(0,0,0,0.1);
+  overflow: hidden;
+  clear: both;
 }
+
+.classic .notice {background: rgba(255,255,255,0.3)}
+.classic .author {color: #777}
 
 body {
 	text-align: center;
@@ -89,9 +106,10 @@ p {
 	position: fixed;
 	top:0;left:0;
 	height:100%;width:100%;
+  z-index: 998
 }
 
-#notices div .author {
+.author {
 	color: #bbb;
 }
 
@@ -135,26 +153,20 @@ p {
 	#next {font-size: 4vw}
 	#belltimes td {font-size: 2vw}
 
-	#notices div {
+	.notice {
 		margin: 3%;
 		width: 88%;
 		padding: 1vw;
-		padding-bottom: 2vw;
-		text-align: left;
-		font-weight: 300;
+		text-align: justify;
 		font-size: 1.2vw;
 	}
 
-	#notices div .title {
+	.notice .title {
 		font-size: 1.8vw;
 		margin-bottom: 0.6vw;
 	}
 
-	#week {font-weight: 300}
-
-
-	.classic #belltimes, .classic .notice {background: rgba(255,255,255,0.3)}
-	.classic #notices div .author {color: #777}
+  .classic #belltimes {background: rgba(255,255,255,0.3)}
 
 }
 
@@ -186,9 +198,27 @@ p {
 		font-size: 3vh;
 	}
 
-	#notices,#week{
+	#week{
 		display: none;
 	}
+
+  #notices {
+    position: absolute;
+    top: 0; left: 0;
+    margin-left: 110%; margin-right: 10%;
+    width: 100%; height: 100%;
+    text-align: justify;
+    overflow-y: scroll;
+  }
+  .notice {
+    margin: 14px;
+    padding: 7px;
+    font-size: 14px;
+  }
+  .notice .title {
+    font-size: 18px;
+    margin-bottom: 7px;
+  }
 
 }
 
@@ -196,7 +226,6 @@ p {
 .classic body {color: black}
 .classic .highlight {color: red}
 .classic a {color:blue}
-.classic b
 
 
 /*--- Overlay Menu ---*/
@@ -250,4 +279,21 @@ p {
   .overlaymenu ul {
     width: 80%;
   }
+}
+
+.overlaymenu select {
+  outline: none;
+  padding: 5px;
+  font-size: 14px;
+  border-radius:3px;
+  background: #eee;
+  color:#333;
+  border:none;
+
+  font: cursive;
+
+  display: inline-block;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  cursor:pointer;
 }

@@ -135,7 +135,9 @@ function getNotices() {
 	$.getJSON( '/api/dailynotices.json', function( data ) {
 
 		if (data.notices) {
+			$('#notices').empty()
 			$('#week').text('Week ' + data.dayInfo.week + data.dayInfo.weekType);
+			if (data.dayInfo.week==0) $('#week').text('Holidays!');
 
 			var newNotice;
 			for(var i=0; i<data.notices.length; i++) {
@@ -174,7 +176,11 @@ function getNotices() {
 
 				$('#notices').append(newNotice);
 
+				// Don't you just *hate* it when people put code in the wrong place?
+				if (localStorage.noticeFilter && window.customise) customise.filterNotices(localStorage.noticeFilter);
+
 			}
+
 		}
 
 	});

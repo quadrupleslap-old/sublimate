@@ -3,7 +3,8 @@ id         = config.id,
 secret     = config.secret,
 callback   = 'http://'+config.host+'/callback';
 
-var port = process.env.VCAP_APP_PORT || 80;
+var port = parseInt(process.env.OPENSHIFT_NODEJS_PORT || process.env.VCAP_APP_PORT || '8080'),
+    ip   = process.env.OPENSHIFT_NODEJS_IP;
 
 var express  = require('express'),
 app          = express(),
@@ -44,6 +45,7 @@ function(accessToken, refreshToken, profile, done) {
 
 passport.use(SBHS);
 
+var termsCache = {}; // Of course we plan to leave this running forever ;)
 
 function getTokens(tokens, done) {
     if (Date.now() <= tokens.expires) {
@@ -61,7 +63,7 @@ function getTokens(tokens, done) {
       var newTokens = {accessToken: result.access_token,
                        refreshToken: tokens.refreshToken,
                        expires: Date.now() + 3600000};
-      return done(null, newTokens);
+      done(null, newTokens);
     });
 
   }
@@ -89,7 +91,9 @@ app.get('/api/dailynotices.json', function(req,res) {
          req.user.tokens = tokens;
          SBHS.dailyNotices(req.user.tokens.accessToken, function (err, o) {
             if (!err && o) {
-                res.json(o);
+                /* EXPERIMENTAL CACHE SETTINGS */
+                res.set('Cache-Control', 'private, max-age=300');
+                res.jsonp(o);
             } else {
                 res.status(500).send(err);
             }
@@ -106,7 +110,7 @@ app.get('/api/timetable.json', function(req,res) {
          req.user.tokens = tokens;
          SBHS.timetable(req.user.tokens.accessToken, function (err, o) {
             if (!err && o) {
-                res.json(o);
+                res.jsonp(o);
             } else {
                 res.status(500).send("500 Internal Server Error");
             }
@@ -117,13 +121,35 @@ app.get('/api/timetable.json', function(req,res) {
     }
 });
 
+app.get('/api/calendar/terms.json', function(req,res) {
+  var year = new Date().getFullYear();
+  if (year in termsCache) res.jsonp(termsCache[year]);
+  else request("https://student.sbhs.net.au/api/calendar/terms.json", function (err, response, body) {
+    if (!err && response.statusCode == 200) {
+      body = JSON.parse(body);
+      res.jsonp(body);
+      termsCache[year] = body;
+    };
+  });
+});
+
 app.get('/api/daytimetable.json', function(req,res) {
     if (req.user) {
         getTokens(req.user.tokens, function(err, tokens) {
          req.user.tokens = tokens;
          SBHS.day(req.user.tokens.accessToken, function (err, o) {
             if (!err && o) {
-                res.json(o);
+                /* EXPERIMENTAL CACHE SETTINGS */
+                res.set('Cache-Control', 'private, max-age=300');
+
+                if (o.shouldDisplayVariations) {
+                  var t=o.bells[o.bells.length-1].time.split(':'),
+                      end=new Date(o.date);
+                  end.setHours(parseInt(t[0])); end.setMinutes(parseInt(t[1]));
+                  res.set('Cache-Control', 'private, max-age='+(end.getTime() - Date.now())/1000);
+                }
+
+                res.jsonp(o);
             } else {
                 res.status(500).send("500 Internal Server Error");
             }
@@ -133,6 +159,8 @@ app.get('/api/daytimetable.json', function(req,res) {
         res.status(401).send("401 Unauthorized");
     }
 });
+
+
 
 app.get('/login', passport.authenticate('sbhs'));
 
@@ -146,4 +174,6 @@ app.get('/callback', passport.authenticate('sbhs', {
     failureRedirect: '/'
 }));
 
-app.listen(80);
+app.get('/*', function(req, res) {res.redirect('/404.html')})
+
+app.listen(port, ip);

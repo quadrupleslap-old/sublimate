@@ -1,6 +1,6 @@
 lib-cov
 .grunt
-build/Release
+build/
 coverage/
 .DS_Store
 *.seed

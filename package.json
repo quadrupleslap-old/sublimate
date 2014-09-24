@@ -1,8 +1,11 @@
 {
   "name": "sublimate",
   "version": "0.0.1",
-  "description": "sublimate =====",
+  "description": "Manifestation of my boredom.",
   "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js"
+  },
   "dependencies": {
     "cookie-parser": "~1.1.0",
     "ejs": "~1.0.0",
@@ -16,12 +19,12 @@
   },
   "devDependencies": {
     "grunt": "~0.4.5",
-    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.6.0",
+    "grunt-contrib-cssmin": "~0.10.0",
     "grunt-contrib-uglify": "~0.5.0",
-    "grunt-contrib-cssmin": "~0.10.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "grunt-git-deploy": "^0.1.1",
+    "grunt-htmlcompressor": "^0.1.10"
   },
   "repository": {
     "type": "git",

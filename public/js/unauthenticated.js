@@ -28,7 +28,7 @@
 					+ escapeHTML(day.bells[i].time) + '</td><td>'
 					+ escapeHTML(day.bells[i].bell)
 					+ '</td>';
-					
+
 					constructed += '</tr>';
 				}
 
@@ -89,7 +89,7 @@
 				}, 1000);
 
 				return;
-				
+
 
 			}
 

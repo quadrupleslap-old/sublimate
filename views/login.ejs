@@ -1,52 +1,100 @@
-  <head>
-    <title>Sublimate</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<html>
+<head>
+  <title>Sublimate</title>
 
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/css/login.css">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="/js/common.js"></script>
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="196x196" href="/img/icon.png">
 
-    <script src="/js/unauthenticated.js"></script>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon-precomposed" sizes="196x196" href="/img/icon.png">
 
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="196x196" href="/img/icon.png">
+  <meta name="application-name" content="Sublimate"/>
+  <meta name="msapplication-config" content="ieconfig.xml" />
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon-precomposed" sizes="
-    196x196" href="/img/icon.png">
+  <link rel="icon"
+  type="image/png"
+  href="/img/favicon.png">
 
-    <meta name="application-name" content="Sublimate"/>
-    <meta name="msapplication-config" content="ieconfig.xml" />
+  <link rel='stylesheet' href='css/style.css'>
 
-     <link rel="icon"
-    type="image/png"
-    href="/img/favicon.png">
-
-  </head>
+</head>
 
 
-  <body>
+<body>
 
-    <div class="outer">
-      <div class="middle">
-        <div id="belltimes">
-          <table></table>
-        </div>
+  <div class="outer">
+    <div class="middle">
+      <div id="belltimes">
+        <table></table>
+      </div>
 
-        <div id="right-side">
-          <p class="subtext" id="week"></p>
+      <div id="right-side">
+        <p class="subtext" id="week">&nbsp;</p>
 
-          <div id="main" onclick="$(this).toggleClass('simpleMode')" class="outer"><div class="middle">
-            <p id="next">Loading</p>
-            <p class="subtext" id="inLabel">in</p>
-            <p id="time">00h, 00m, 00s</p>
-          </div></div>
-
-          <a id="button" href="/login">Login with SBHS</a>
-        </div>
+        <div id="main" onclick="$(this).toggleClass('simpleMode')" class="outer"><div class="middle">
+          <p id="next">Loading</p>
+          <p class="subtext" id="inLabel">in</p>
+          <p id="time">00h, 00m, 00s</p>
+        </div></div>
 
       </div>
+
+      <a id="button" onclick="window.location.href='/login'">Login with SBHS</a>
+
     </div>
-  </body>
+  </div>
+
+  <style>
+  html,body, .simpleMode {
+    background:#eee !important;
+    color: black !important;
+  }
+
+  #button {
+    position: fixed;
+    right: 0;
+    top: 0;
+
+    text-decoration: none;
+    border-bottom-left-radius: 3px;
+    box-shadow: 0 0 3px #666;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 14px;
+    background: #3ad;
+    opacity: .5;
+    color: #fff;
+  }
+
+  #button:hover {
+    opacity:1;
+  }
+
+  </style>
+
+  <script>
+  window.q=[], window.$=function(f){q.push(f)};
+  window.addEventListener("load", function() {
+
+    var element = document.createElement("script");
+    document.body.appendChild(element);
+
+    element.addEventListener("load", function() {
+      var scripts = ["/js/common.js","/js/unauthenticated.js"];
+      $.each(scripts, function(i,o) {
+        // $("head").append($("<script>").attr('src',o))
+        var e = document.createElement("script");
+        document.head.appendChild(e);
+        e.src=o;
+      });
+      $.each(q,function(index,f){$(f)});
+    })
+
+    element.src = "//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js";
+  });
+  </script>
+
+</body>
+</html>
