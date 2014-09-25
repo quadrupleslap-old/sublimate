@@ -1,6 +1,6 @@
 <head>
 <title>404</title>
-<meta name=viewport content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
 a {
   color:#06f;
@@ -12,8 +12,8 @@ a:hover {color:#0bf}
 
 body {
   font:1.2em sans-serif;
-  color:#fff;
-  background-color:#000;
+  color:#222;
+  background-color:#eee;
   text-align: center;
   overflow: hidden;
 }
@@ -30,7 +30,8 @@ div {
 
 <body>
 <div>
-<p>Sorry, but we couldn't find what you were looking for. You should probably <a href="/">go home</a>.</p>
+<!-- Maximum Creepiness -->
+<p>Sorry<%= name?" "+name:"" %>, but we couldn't find what you were looking for. You should probably <a href="/">go home</a>.</p>
 <h1 style="font-size:15vw">(╥﹏╥)</h1>
 </div>
 </body>

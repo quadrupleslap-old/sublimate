@@ -1,8 +1,8 @@
-<div class="overlaymenu" id="contextmenu" style="display: none">
-  <div onmousedown="$(this).parent().fadeOut()"></div>
-  <ul      onclick="$(this).parent().fadeOut()">
-    <li onclick="customise.requestImage()">Change Background</li>
-    <li onclick="arguments[0].stopPropagation()">
+<div class='overlaymenu' id='contextmenu' style='display: none'>
+  <div onmousedown='$(this).parent().fadeOut()'></div>
+  <ul      onclick='$(this).parent().fadeOut()'>
+    <li onclick='customise.requestImage()'>Change Background</li>
+    <li onclick='arguments[0].stopPropagation()'>
       Notices:
       <select id='noticesFilterSelect' onchange='localStorage.noticeFilter=this.value;customise.filterNotices(this.value);$("#contextmenu").fadeOut()'>
         <option value=''>All Notices</option>
@@ -15,12 +15,13 @@
       </select>
     </li>
     <li onclick='localStorage.classicMode="1"==localStorage.classicMode?"0":"1";$("html").toggleClass("classic");customise.displayImage();'>Toggle Theme</li>
-    <li onclick="localStorage.clear();location.reload()">Clear All Data</li>
+    <li onclick='localStorage.clear();location.reload()'>Clear All Data</li>
   </ul>
 </div>
-
 <script>
 $(function () {
+  $("<div class='overlaymenu' id='contextmenu' style='display: none'>")
+
   $(document).on("contextmenu", function (e) {
     e.preventDefault();
     if (!$(e.originalEvent.target).parents("#contextmenu").length > 0) $("#contextmenu").fadeIn();

@@ -174,6 +174,8 @@ app.get('/callback', passport.authenticate('sbhs', {
     failureRedirect: '/'
 }));
 
-app.get('/*', function(req, res) {res.render('404')})
+app.get('/*', function(req, res) {
+  res.render('404', {name: req.user ? req.user.givenName : null })
+});
 
 app.listen(port, ip);
