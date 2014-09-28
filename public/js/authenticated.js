@@ -1,4 +1,7 @@
 	$(function() {
+		// Dodgy hax ftw!
+		$("#contextmenu ul").append("<li onclick='window.location.href=\"/about.html\"'>About Sublimate</li>");
+
 		getDay()
 		getNotices()
 	})

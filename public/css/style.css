@@ -25,8 +25,8 @@ a:hover { color:red; }
 .highlight {color:#bf4}
 
 .notice {
-	border-radius: 3px;
-	background: rgba(0,0,0,0.1);
+  border-radius: 3px;
+  background: rgba(0,0,0,0.1);
   overflow: hidden;
   clear: both;
 }
@@ -35,87 +35,80 @@ a:hover { color:red; }
 .classic .author {color: #777}
 
 body {
-	text-align: center;
-	margin:0;padding:0;
-	color:#fff;
-	font: 14px "Helvetica Neue", Roboto, Arial, "Lucida Grande", sans-serif;
-	font-weight: 300;
-	letter-spacing: 0.2px;
+  text-align: center;
+  margin:0;padding:0;
+  color:#fff;
+  font: 14px Roboto, "Helvetica Neue", Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.2px;
 
-	-ms-overflow-style: none;
+  -ms-overflow-style: none;
 
-	cursor: default;
+  cursor: default;
 
-	-ms-user-select:none;
-	user-select:none;
-	-webkit-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  -webkit-user-select:none;
 }
 
 ::-webkit-scrollbar {display: none}
 
 p {
 
-	margin: 0;
-	overflow: hidden;
-	text-overflow: ellipsis;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .timeCell {width: 25%}
 .roomCell {
-	width: 20%;
-	text-align: right
+  width: 20%;
+  text-align: right
 }
 
 .outer {
-	display: table;
-	height: 100%;
-	width: 100%;
+  display: table;
+  height: 100%;
+  width: 100%;
 }
 .middle {
-	display: table-cell;
-	vertical-align: middle;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .rollover {
-	border-bottom: 1px dotted currentColor;
-	width:auto;
-	display: inline;
-	cursor: help;
+  border-bottom: 1px dotted currentColor;
+  width:auto;
+  display: inline;
+  cursor: help;
 }
 
 #belltimes {
-	margin: auto;
-	table-layout: fixed;
-	border-collapse:collapse;
+  margin: auto;
+  table-layout: fixed;
+  border-collapse:collapse;
 }
 
 #belltimes table {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 #belltimes td
 {
-	font-weight: 300;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.simpleMode {
-	position: fixed;
-	top:0;left:0;
-	height:100%;width:100%;
-  z-index: 998
+  font-weight: 300;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .author {
-	color: #bbb;
+  color: #bbb;
 }
 
 
 #main {
-	font-weight: 100;
+  font-weight: 100;
 }
 
 
@@ -124,47 +117,54 @@ p {
 
 @media (orientation:landscape) {
 
-	#belltimes {
-		position: fixed;
-		float: left;
-		width:36%;
-		padding: 3%;
-		top: 0; left: 0;
-		height: 100%;
-		box-sizing: border-box;
-		overflow: scroll;
+  .simpleMode {
+    position: fixed;
+    top:0;left:0;
+    height:100%;width:100%;
+    z-index: 998
+  }
 
-		border-right-style: solid;
-		border-width: 0px 1px 0px 0px;
-		border-image: linear-gradient(to bottom, transparent, #aaa, transparent) 0 100%;
-	}
+  #belltimes {
+    position: fixed;
+    float: left;
+    width:36%;
+    padding: 3%;
+    top: 0; left: 0;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: scroll;
 
-	#right-side {
-		position: absolute;
-		right: 0;
-		top: 5%;
-		width: 64%;
-		height: auto;
-		float: right;
-	}
+    border-right-style: solid;
+    border-width: 0px 1px 0px 0px;
+    border-image: linear-gradient(to bottom, transparent, #aaa, transparent) 0 100%;
+  }
 
-	#time {font-size: 7vw}
-	.subtext {font-size: 2vw}
-	#next {font-size: 4vw}
-	#belltimes td {font-size: 2vw}
+  #right-side {
+    position: absolute;
+    right: 0;
+    top: 5%;
+    width: 64%;
+    height: auto;
+    float: right;
+  }
 
-	.notice {
-		margin: 3%;
-		width: 88%;
-		padding: 1vw;
-		text-align: justify;
-		font-size: 1.2vw;
-	}
+  #time {font-size: 7vw}
+  .subtext {font-size: 2vw}
+  #next {font-size: 4vw}
+  #belltimes td {font-size: 2vw}
 
-	.notice .title {
-		font-size: 1.8vw;
-		margin-bottom: 0.6vw;
-	}
+  .notice {
+    margin: 3%;
+    width: 88%;
+    padding: 1vw;
+    text-align: justify;
+    font-size: 1.2vw;
+  }
+
+  .notice .title {
+    font-size: 1.8vw;
+    margin-bottom: 0.6vw;
+  }
 
   .classic #belltimes {background: rgba(255,255,255,0.3)}
 
@@ -174,33 +174,33 @@ p {
 
 @media (orientation:portrait) {
 
-	#belltimes {
-		width: 80%;
-	}
+  #belltimes {
+    width: 80%;
+  }
 
-	#time {
-		font-size: 6vh;
-	}
+  #time {
+    font-size: 6vh;
+  }
 
-	.subtext {
-		font-size: 2vh;
-		margin-top: 1vh;
-		margin-bottom: 1vh;
-	}
+  .subtext {
+    font-size: 2vh;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  }
 
-	#next {
-		margin-top: 4vh;
-		font-size: 4vh;
-	}
+  #next {
+    margin-top: 4vh;
+    font-size: 4vh;
+  }
 
-	#belltimes td {
-		padding: 1vh;
-		font-size: 3vh;
-	}
+  #belltimes td {
+    padding: 1vh;
+    font-size: 3vh;
+  }
 
-	#week{
-		display: none;
-	}
+  #week{
+    display: none;
+  }
 
   #notices {
     position: absolute;
@@ -296,4 +296,48 @@ p {
   -webkit-appearance:none;
   -moz-appearance:none;
   cursor:pointer;
+}
+
+
+/*MONKEYS, MONKEYS EVERYWHERE! (Monkey Patches ftw!)*/
+@media (orientation:portrait) {
+  #belltimes {
+    width: 100%;
+    height:100%;
+    position: absolute;
+    top: 0; left: 0;
+    margin-left: 100%; margin-right: 0;
+  }
+
+  #belltimes table {
+    padding: 5%;
+  }
+
+  #main {
+    width: 100%; height: 100%;
+  }
+
+  #time {
+    font-size: 18vw;
+  }
+
+  .subtext {
+    font-size: 4vw;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+  }
+
+  #next {
+    margin-top: 4vw;
+    font-size: 9vw;
+  }
+
+  #notices {
+    position: absolute;
+    top: 0; left: 0;
+    margin-left: 200%; margin-right: 0;
+    width: 100%; height: 100%;
+    text-align: justify;
+    overflow-y: scroll;
+  }
 }

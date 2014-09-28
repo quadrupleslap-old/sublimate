@@ -15,6 +15,7 @@
       </select>
     </li>
     <li onclick='localStorage.classicMode="1"==localStorage.classicMode?"0":"1";$("html").toggleClass("classic");customise.displayImage();'>Toggle Theme</li>
+    <li style='border-top:solid 1px #ddd'></li>
     <li onclick='localStorage.clear();location.reload()'>Clear All Data</li>
   </ul>
 </div>
@@ -24,17 +25,17 @@ $(function () {
 
   $(document).on("contextmenu", function (e) {
     e.preventDefault();
-    if (!$(e.originalEvent.target).parents("#contextmenu").length > 0) $("#contextmenu").fadeIn();
+    if (!$(e.originalEvent.target).parents("#contextmenu ul").length > 0) $("#contextmenu").fadeIn();
   });
 
   var pressTimer;
   $(document).on("touchend touchmove", function(){
-    clearTimeout(pressTimer)
+    clearTimeout(pressTimer);
   }).on('touchstart', function(e){
-    (!$(e.originalEvent.target).parents("#contextmenu").length > 0) && $("#contextmenu").fadeOut();
+    (!$(e.originalEvent.target).parents("#contextmenu ul").length > 0) && $("#contextmenu").fadeOut();
     if (e.originalEvent.touches.length == 1) pressTimer = window.setTimeout(function() {
       $("#contextmenu").fadeIn();
-    },500)
+    },500);
   });
 })
 </script>
