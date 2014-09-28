@@ -1,7 +1,7 @@
 // THIRDS
 (function () {
   var timer;
-  $(window).on("touchmove scroll", function(event) {
+  $(window).on("touchmove scroll resize", function(event) {
     clearTimeout(timer);
     timer = setTimeout(function() {
       var b     = $('body')[0],
