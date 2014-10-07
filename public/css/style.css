@@ -317,7 +317,8 @@ p {
   }
 
   #time {
-    font-size: 18vw;
+    font-size: 16vh;
+    word-spacing: 100vw;
   }
 
   .subtext {
@@ -328,7 +329,7 @@ p {
 
   #next {
     margin-top: 4vw;
-    font-size: 9vw;
+    font-size: 6vh;
   }
 
   #notices {

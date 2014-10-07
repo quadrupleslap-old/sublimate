@@ -4,7 +4,7 @@
     <li onclick='customise.requestImage()'>Change Background</li>
     <li onclick='arguments[0].stopPropagation()'>
       Notices:
-      <select id='noticesFilterSelect' onchange='localStorage.noticeFilter=this.value;customise.filterNotices(this.value);$("#contextmenu").fadeOut()'>
+      <select id='noticesFilterSelect' onchange='customise.filterNotices(this.value);$("#contextmenu").fadeOut();localStorage.noticeFilter=this.value'>
         <option value=''>All Notices</option>
         <option value='7'>Year 7</option>
         <option value='8'>Year 8</option>
