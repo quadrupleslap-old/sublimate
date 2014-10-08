@@ -42,8 +42,7 @@
 					<p id="time">00h, 00m, 00s</p>
 				</div></div>
 
-				<div id="notices">
-				</div>
+				<div id="notices"></div>
 			</div>
 
 		</div>
@@ -59,7 +58,6 @@
     element.addEventListener("load", function() {
       var scripts = ["/js/common.js","/js/customise.js","/js/authenticated.js","/js/scrollsnap.js"];
       $.each(scripts, function(i,o) {
-        // $("head").append($("<script>").attr('src',o))
         var e = document.createElement("script");
         document.head.appendChild(e);
         e.src=o;

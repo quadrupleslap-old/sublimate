@@ -23,7 +23,7 @@
 
 				if(day.timetable.timetable.periods[day.bells[i].bell] && day.timetable.timetable.periods[day.bells[i].bell].room) {
 
-					constructed += '<td class="timeCell">' + escapeHTML(day.bells[i].time) + '</td>'
+					constructed += '<td class="timeCell">' + escapeHTML(day.bells[i].time) + '</td>';
 
 					if (day.bells[i].bell in day.classVariations && day.classVariations[day.bells[i].bell].type != "novariation") {
 						var message = day.classVariations[day.bells[i].bell].title + (day.classVariations[day.bells[i].bell].type == "replacement" ?
@@ -45,7 +45,7 @@
 
 					if (day.bells[i].bell in day.roomVariations) {
 
-						constructed += '<td class="roomCell '+changeClass+'">'
+						constructed += '<td class="roomCell highlight">'
 						+ escapeHTML(day.roomVariations[day.bells[i].bell].roomTo)
 						+ '</td>'
 
