@@ -175,7 +175,7 @@ app.get('/callback', passport.authenticate('sbhs', {
 }));
 
 app.get('/*', function(req, res) {
-  res.render('404', {name: req.user ? req.user.givenName : null })
+  res.status(404).render('404', {name: req.user ? req.user.givenName : null })
 });
 
 app.listen(port, ip);
